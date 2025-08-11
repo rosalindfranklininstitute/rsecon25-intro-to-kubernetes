@@ -12,13 +12,12 @@ It’s perfect for testing Kubernetes basics on **Minikube** or running locally 
 
 Before you start, you’ll need:
 
-1. **[Node.js](https://nodejs.org/en/download)** (only if running locally without Docker)
-2. **Container runtime** (choose one):
+1. **Container runtime** (choose one):
 
    * [Docker](https://docs.docker.com/get-docker/)
    * [Podman](https://podman.io/getting-started/installation)
-3. **[Minikube](https://minikube.sigs.k8s.io/docs/start/)** (for running in Kubernetes)
-4. **[kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)** (Kubernetes CLI)
+2. **[Minikube](https://minikube.sigs.k8s.io/docs/start/)** (for running in Kubernetes)
+3. **[kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)** (Kubernetes CLI)
 
 ---
 
@@ -26,14 +25,14 @@ Before you start, you’ll need:
 
 #### **Windows**
 
-* Docker Desktop: [https://docs.docker.com/desktop/install/windows/](https://docs.docker.com/desktop/install/windows/)
+* Docker Desktop: [https://docs.docker.com/desktop/setup/install/windows-install/](https://docs.docker.com/desktop/setup/install/windows-install/)
 * Podman: [https://podman.io/getting-started/installation#installing-on-windows](https://podman.io/getting-started/installation#installing-on-windows)
 * Minikube: [https://minikube.sigs.k8s.io/docs/start/#windows](https://minikube.sigs.k8s.io/docs/start/#windows)
 * kubectl: [https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/)
 
 #### **macOS**
 
-* Docker Desktop: [https://docs.docker.com/desktop/install/mac/](https://docs.docker.com/desktop/install/mac/)
+* Docker Desktop: [https://docs.docker.com/desktop/setup/install/mac-install/](https://docs.docker.com/desktop/setup/install/mac-install/)
 * Podman: [https://podman.io/getting-started/installation#installing-on-macos](https://podman.io/getting-started/installation#installing-on-macos)
 * Minikube: [https://minikube.sigs.k8s.io/docs/start/#macos](https://minikube.sigs.k8s.io/docs/start/#macos)
 * kubectl: [https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/)
