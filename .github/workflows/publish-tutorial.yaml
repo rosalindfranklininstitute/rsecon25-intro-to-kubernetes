@@ -1,4 +1,4 @@
-name: Publish Tutorial
+name: publish-tutorial
 on:
   push:
     branches:
