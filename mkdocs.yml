@@ -1,6 +1,6 @@
 site_name: RSECon25 Workshop: Deploying a Web Application with Kubernetes
 repo_url: https://github.com/rosalindfranklininstitute/rsecon25-intro-to-kubernetes
-edit_uri: tutorial
+edit_uri: tree/main/tutorial
 theme:
   name: material
 
