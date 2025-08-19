@@ -1,4 +1,4 @@
-site_name: RSECon25 Workshop: Deploying a Web Application with Kubernetes
+site_name: RSECon25 Workshop- Deploying a Web Application with Kubernetes
 theme:
   name: material
   palette:
