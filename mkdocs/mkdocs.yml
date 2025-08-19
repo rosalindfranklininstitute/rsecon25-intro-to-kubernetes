@@ -5,9 +5,9 @@ theme:
     primary: cyan
     accent: teal
 nav:
-  - Home: intro.md
+  - Home: Intro.md
 repo_url: https://github.com/rosalindfranklininstitute/rsecon25-intro-to-kubernetes
-edit_uri: tree/main/tutorial
+edit_uri: tree/main/mkdocs/docs
 theme:
   name: material
 
