@@ -75,4 +75,4 @@ kubectl delete <pod-name>
 
 Now run `kubectl get pods` again to check the status of the pod. What do you notice?
 
-You will see that another pod, with a different unique-identifier, will have been started in its place. We will find out how and why in the next section on deployments. 
+You will see that another pod, with a different unique-identifier, will have been started in its place. We will find out how and why in the next section on deployments.
