@@ -3,6 +3,7 @@ nav:
 - index.md
 - why-kubernetes.md
 - kubernetes-architecture.md
+- kubernetes-dashboard.md
 - kubechaos.md
 repo_url: https://github.com/rosalindfranklininstitute/rsecon25-intro-to-kubernetes
 edit_uri: tree/main/tutorial
