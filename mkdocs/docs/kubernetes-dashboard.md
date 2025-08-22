@@ -6,15 +6,18 @@ cluster at a glance. While the dashboard may be used to directly manage a
 Kubernetes cluster, we will take the more explicit approach to
 management with the Kubernetes CLI, `kubectl`.
 
+> ⚠️ Commands in the lessons should be run in a Linux/WSL/Mac OS terminal, or 
+> a Windows equivalent (Command Prompt or Power shell)
+
 ## Dashboard Access
 minikube has built-in support for the Kubernetes Dashboard. First, start a
 cluster if you have not already:
 ```bash
-$ minikube start
+minikube start
 ```
 Then, launch the dashboard with
 ```bash
-$ minikube dashboard
+minikube dashboard
 ```
 This should open the web UI in a browser window. Alternatively, run `minikube
 dashobard --url` and copy the URL. 
