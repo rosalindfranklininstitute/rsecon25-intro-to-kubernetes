@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Lesson 1: Your First Deployment - RSECon25 Workshop- Deploying a Web Application with Kubernetes</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">RSECon25 Workshop- Deploying a Web Application with Kubernetes</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Deploying a Webservice with Kubernetes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../why-kubernetes/" class="nav-link">Why kubernetes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../kubernetes-architecture/" class="nav-link">Kubernetes Architecture</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Lesson 1: Your First Deployment</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../kubernetes-architecture/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/rosalindfranklininstitute/rsecon25-intro-to-kubernetes/tree/main/tutorial/kubechaos.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#lesson-1-your-first-deployment" class="nav-link">Lesson 1: Your First Deployment</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#prerequisites" class="nav-link">Prerequisites</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#building-the-container-image" class="nav-link">Building the Container Image</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#inspecting-the-manifest" class="nav-link">Inspecting the Manifest</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#application-deployment" class="nav-link">Application Deployment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#pods-and-logs" class="nav-link">Pods and Logs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#deletion-experiment" class="nav-link">Deletion Experiment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#delving-into-deployments" class="nav-link">Delving into Deployments</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ingress-production-ready-external-access" class="nav-link">Ingress: Production-Ready External Access</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#beyond-minikube-service" class="nav-link">Beyond minikube service</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#further-reading" class="nav-link">📚 Further Reading</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="lesson-1-your-first-deployment">Lesson 1: Your First Deployment</h1>
+<p>In this lesson we are going to deploy a simple web application, called
+Kubechaos, on a minikube cluster.  This will demonstrate core Kubernetes
+concepts including pods, deployments, and services.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You will need a local clone of the Kubechaos repository:</p>
+<pre><code>git clone https://github.com/rosalindfranklininstitute/rsecon25-intro-to-kubernetes.git
+cd rsecon25-intro-to-kubernetes
+</code></pre>
+<p>Check your cluster from the previous lesson is still running
+(<code>minikube start</code> if it is not):</p>
+<pre><code>minikube status
+</code></pre>
+<h2 id="building-the-container-image">Building the Container Image</h2>
+<p>Kubernetes runs applications in containers, but does not handle building
+container images itself&mdash;it expects images to already be available.
+Minikube provides a convenient build tool that allows us to
+create a Docker image (defined in <code>image/Dockerfile</code>) for the Kubechaos app:</p>
+<pre><code>minikube image build -t local/kubechaos:v1 image
+</code></pre>
+<p>The built image is stored in minikube's local registry, identified
+in the output of the command <code>minikube image ls</code>
+by the tag <code>local/kubchaos:v1</code>.</p>
+<h2 id="inspecting-the-manifest">Inspecting the Manifest</h2>
+<p>A Kubernetes manifest is a YAML file that defines the target state of
+resources in a cluster. If you open <code>deployment/manifests.yaml</code>,
+you'll see it contains definitions for:</p>
+<ul>
+<li>A Deployment (manages pods)</li>
+<li>A Service (provides networking)</li>
+</ul>
+<p>Notice the image tag <code>local/kubechaos:v1</code> in the manifest
+matches what we just built.</p>
+<h2 id="application-deployment">Application Deployment</h2>
+<p>The <code>kubectl apply</code> command deploys resources in manifest files to a cluster:</p>
+<pre><code>kubectl apply -f deployment/manifests.yaml
+</code></pre>
+<p>For large applications, it can be useful to know when a pod is ready:</p>
+<pre><code>kubectl wait --for=condition=ready pod -l app=kubechaos
+</code></pre>
+<blockquote>
+<p>The <code>-l app=kubechaos</code> flag targets pods with the label <code>app=kubechaos</code>
+seen in the manifest.</p>
+</blockquote>
+<p>You can now view the app in your browser by using minkube's service command to
+create a proxy to the container:</p>
+<pre><code>minikube service kubechaos-svc
+</code></pre>
+<p>Open the returned URL in your browser&mdash;every refresh is a new surprise 🎲</p>
+<h2 id="pods-and-logs">Pods and Logs</h2>
+<p>Let's examine what was created on the cluster. In the terminal, list
+the running pods:</p>
+<pre><code>kubectl get pods 
+</code></pre>
+<p>You will get output similar to:</p>
+<pre><code>NAME                        READY   STATUS    RESTARTS   AGE
+kubechaos-6d7ddd9cf-lvczb   1/1     Running   0          3s
+</code></pre>
+<p>Pods are the smallest unit of Kubernetes deployment. They
+ represents one or more containers running together. 
+In this case, we have a Kubechaos pod with a single (1/1) container running.
+You can check the pod has also appeared in the Web Dashboard
+under <code>Workloads &gt; Pods</code>.</p>
+<p>To learn the status of the pod we can view the logs:</p>
+<pre><code>kubectl logs kubechaos-&lt;id&gt;
+</code></pre>
+<p>where you will need to replace <code>&lt;id&gt;</code> with the unique identifier 
+that was shown under <code>NAME</code> when you ran the <code>get pods</code> command.
+You will see a record of the node.js app starting inside
+the container:</p>
+<pre><code>&gt; kubechaos@1.0.0 start
+&gt; node app.js
+
+Server running at http://localhost:3000
+</code></pre>
+<p>Note that the URL here refers to an internal port of the container, which
+is different from the port the minikube proxy exposed on 
+your localhost for accessing the service from outside the cluster.
+In general
+Kubernetes keeps the internal container network separate from
+external access, and you need to explicitly configure how services can be
+reached from outside the cluster (see <a href="#ingress-production-ready-external-access">Ingress</a>
+below).</p>
+<h2 id="deletion-experiment">Deletion Experiment</h2>
+<p>Let's see what happens if we delete the pod from the cluster:</p>
+<pre><code>kubectl delete &lt;pod-name&gt;
+</code></pre>
+<p>Now run <code>kubectl get pods</code> again, what do you notice?</p>
+<p>You will see that a new pod, with a different unique-identifier, 
+was started in place of the removed one. This <em>self-healing</em> is a key
+feature of Kubernetes' deployments.</p>
+<h2 id="delving-into-deployments">Delving into Deployments</h2>
+<p>A Deployment is a Kubernetes resource that manages the desired state of an
+application. Looking back at the manifest file (deployment/manifests.yaml), the
+Deployment section defined how many replicas of the application container should run,
+which image to use, and further configuration.  This is an
+example of a <em>declarative</em> approach: you declare the target state, and
+Kubernetes figures out how to attain&mdash;and then maintain&mdash;it.</p>
+<h3 id="replica-sets">Replica Sets</h3>
+<p>Deployments don't directly manage pods. Instead, they work through <em>ReplicaSets</em>
+which are responsible for creating the individual pods. In summary,</p>
+<p><strong>Deployment → ReplicaSet → Pods</strong></p>
+<p>Where <em>Deployment</em> defines the target state, <em>ReplicaSet</em>
+ensures the correct number of replicas are alive, and <em>Pods</em> are the
+actual App instances.</p>
+<h3 id="self-healing-and-scaling">Self-healing and Scaling</h3>
+<p>We have already seen self-healing in action: when a pod was deleted the
+ReplicaSet detected the live state (0 pods) didn't match the 
+desired state (1 pod) and so created a replacement. This automatic recovery ensures
+applications can remain available even when individual pods fail.</p>
+<p>Another key feature of Kubernetes' deployments is <em>scaling</em>. Suppose we want
+to scale up to three replicas to support more concurrent requests or ensure
+better availability.</p>
+<p>First, let's set up a watch to monitor the pods in real-time:</p>
+<pre><code>kubectl get pods -w
+</code></pre>
+<p>Next, in a new terminal, run the following <code>kubectle scale</code> command:</p>
+<pre><code>kubectl scale deployment kubechaos --replicas=3
+</code></pre>
+<p>In the first terminal you will see in two additional replicas being spun up
+immediately! You can verify the new state with <code>kubectl get deployment</code>
+or by reviewing the Deployments/Pods page in the Web Dashboard.</p>
+<h2 id="ingress-production-ready-external-access">Ingress: Production-Ready External Access</h2>
+<p>In networking terminology, "ingress" refers to incoming traffic, and "egress"
+outgoing traffic. For infrastructure and cloud computing, ingress describes
+how external clients access services running inside a protected network.</p>
+<p>You won't be surprised to learn that Ingress in Kubernetes is also a resource.
+Specifically, it
+defines rules for routing HTTP/HTTPS traffic from outside the cluster to
+services within it. These rules are implemented by a load balancer component
+(like nginx) called an Ingress Controller. 
+A simplified traffic flow is:</p>
+<pre><code>External Client → Ingress Controller + Rules → Service → Pod
+</code></pre>
+<p>where the Service groups pods running your application. </p>
+<h2 id="beyond-minikube-service">Beyond minikube service</h2>
+<p>Above, we used the <code>minikube service</code> command, which
+creates a temporary proxy from your local machine to the application
+containers.
+While convenient for development, this approach is limited to basic port forwarding.</p>
+<p>For production, you'll need the proper HTTPS routing with DNS,
+SSL/TLS termination and advanced load balancing provided by
+Kubernetes Ingress. Minikube supports Kubernetes Ingress with the
+<code>ingress</code> add-on (see Further Reading).</p>
+<h2 id="further-reading">📚 Further Reading</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/reference/kubectl/quick-reference/">Official kubectl Quick Reference</a></li>
+<li><a href="https://www.tkng.io/">The Kubernetes Networking Guide</a> </li>
+<li><a href="https://minikube.sigs.k8s.io/docs/handbook/addons/ingress-dns/#Linux">Ingress DNS minikube add-on</a></li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Why kubernetes - RSECon25 Workshop- Deploying a Web Application with Kubernetes</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">RSECon25 Workshop- Deploying a Web Application with Kubernetes</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Deploying a Webservice with Kubernetes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Why kubernetes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../kubernetes-architecture/" class="nav-link">Kubernetes Architecture</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../kubechaos/" class="nav-link">Lesson 1: Your First Deployment</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../kubernetes-architecture/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/rosalindfranklininstitute/rsecon25-intro-to-kubernetes/tree/main/tutorial/why-kubernetes.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>TL;DR</p>
+<p>Docker compose is recommended if you have a single project with a few services for a single host.
+The complexity of Kuberentes is recommened if you have more than one application that you want to scale of have in high availability. This tutorial will demonstrate some of these features of Kubernetes and whether you want to consider using it in your project.</p>
+<p>A more in depth comparison is provided here:</p>
+<ul>
+<li>
+<p><em>Scalability and High Availability:</em><br />
+        Kubernetes excels in large-scale environments by distributing containers across multiple nodes, ensuring high availability. If a node fails, others can take over seamlessly.
+        Docker Compose is limited to a single host, making it less suitable for production or scalable applications.</p>
+</li>
+<li>
+<p><em>Self-Healing and Reliability:</em> 
+        Kubernetes offers robust self-healing capabilities, automatically restarting failed containers and rescheduling them on healthy nodes.
+        Docker Compose has basic restart policies but lacks the advanced features of Kubernetes.</p>
+</li>
+<li>
+<p><em>Declarative Configuration and Rolling Updates:</em>
+        Both use YAML files for configuration, but Kubernetes supports more complex setups and rolling updates without downtime.</p>
+</li>
+<li>
+<p><em>Resource Management:</em>
+        Kubernetes provides fine-grained control over CPU, GPU and memory resources, ensuring efficient utilization across clusters.
+        Docker Compose offers basic resource limits, which may not be sufficient for large deployments.</p>
+</li>
+<li>
+<p><em>Networking:</em> 
+        Kubernetes supports sophisticated networking with pods, services, and ingress controllers, enabling advanced communication and external access.
+        Docker Compose uses a simpler network setup suitable for smaller applications.</p>
+</li>
+<li>
+<p><em>Security:</em>
+        Kubernetes includes RBAC and network policies for enhanced security in large-scale deployments.
+        Docker Compose relies on the host's security measures, which may be less robust.</p>
+</li>
+<li>
+<p><em>Extensibility and Ecosystem:</em>
+        Kubernetes has a vast ecosystem with CRDs and third-party tools for extensibility, offering more features beyond the basics.
+        Docker Compose lacks such extensive extension capabilities.</p>
+</li>
+<li>
+<p><em>Stateful Applications:</em> 
+        Kubernetes effectively manages stateful applications using StatefulSets, providing persistent identities and storage.
+        Docker Compose handles some stateful apps but isn't as robust for distributed systems.</p>
+</li>
+<li>
+<p><em>Backup and Restore:</em>
+        Kubernetes simplifies data management with PersistentVolumes and ConfigMaps.
+        Docker Compose requires manual handling of volumes and data.</p>
+</li>
+<li>
+<p><em>Scalability Testing:</em>
+        Kubernetes allows easy horizontal scaling by adjusting replicas based on load without downtime.
+        Scaling in Docker Compose is less seamless, typically requiring more manual intervention.</p>
+</li>
+<li>
+<p><em>Simplicity vs. Complexity:</em>
+        Docker Compose is ideal for small projects or development due to its simplicity and lightweight setup.
+        Kubernetes, while more complex, is better suited for production environments requiring advanced features.</p>
+</li>
+</ul>
+<p><em>This text was produced with the help of deepseek-r1 from the Ollama project https://github.com/ollama/ollama</em> </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
