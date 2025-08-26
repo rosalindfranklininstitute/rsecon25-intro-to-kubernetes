@@ -4,7 +4,7 @@ metadata:
   name: kubechoas-style
 data:
   BG_COLOR: teal
-  FONT_FAMILY: verdana
-
-  
-  title: "Kubechaos: The configurable Kubernetes App"
+  FONT_COLOR: white
+  BORDER_COLOR: grey
+  BORDER_SIZE: 8px
+  BORDER_TYPE: dotted
