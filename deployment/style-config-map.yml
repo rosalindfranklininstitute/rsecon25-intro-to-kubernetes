@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubechoas-style
+data:
+  BG_COLOR: teal
+  FONT_FAMILY: verdana
+
+  
+  title: "Kubechaos: The configurable Kubernetes App"

@@ -1,6 +1,7 @@
 import { createServer } from 'http';
 import os from 'os';
 
+
 const port = process.env.PORT || 3000;
 
 // Array of HTML fragments (no DOM manipulation needed)
@@ -36,6 +37,14 @@ const surprises = [
    </script>`
 ];
 
+  
+//Style from env variables
+const backgroundColor = process.env.BG_COLOR || 'white';
+const fontColor = process.env.FONT_COLOR || 'black';
+const borderSize = process.env.BORDER_SIZE || '2px';
+const borderType = process.env.BORDER_TYPE || 'dashed';
+const borderColor = process.env.BORDER_COLOR || '#ccc';
+
 function renderPage(surpriseContent) {
   return `
 <!DOCTYPE html>
@@ -44,8 +53,9 @@ function renderPage(surpriseContent) {
   <meta charset="UTF-8">
   <title>KubeChaos @ RSECon25</title>
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 5rem; }
-    #playground { height: 400px; border: 2px dashed #ccc; margin-top: 20px; }
+    body { font-family: 'sans-serif'; text-align: center; margin-top: 5rem; background-color: ${ backgroundColor};
+    color: ${fontColor};}
+    #playground { height: 400px; border: ${borderSize} ${borderType} ${borderColor}; margin-top: 20px; }
     button { padding: 10px 20px; font-size: 1rem; cursor: pointer; }
   </style>
 </head>
@@ -62,6 +72,7 @@ function renderPage(surpriseContent) {
 };
 
 const server = createServer((_req, res) => {
+  
   const randomSurprise = surprises[Math.floor(Math.random() * surprises.length)];
   res.writeHead(200, {
     'Content-Type': 'text/html',
@@ -69,6 +80,7 @@ const server = createServer((_req, res) => {
   });
   res.end(renderPage(randomSurprise));
 });
+
 
 server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
