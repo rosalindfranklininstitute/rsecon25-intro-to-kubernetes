@@ -4,6 +4,15 @@ nav:
 - why-kubernetes.md
 - kubernetes-architecture.md
 - kubechaos.md
+theme: 
+  name: material
+  palette:
+    primary: teal
+    accent: indigo
+  logo: assets/CN-SIG-logo.png
+  features: 
+    - instant
+  
 repo_url: https://github.com/rosalindfranklininstitute/rsecon25-intro-to-kubernetes
 edit_uri: tree/main/tutorial
 
