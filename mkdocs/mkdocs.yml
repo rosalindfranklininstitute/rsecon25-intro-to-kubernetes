@@ -3,8 +3,9 @@ nav:
 - index.md
 - why-kubernetes.md
 - kubernetes-architecture.md
-- kubernetes-dashboard.md
-- kubechaos.md
+- lesson0-kubernetes-dashboard.md
+- lesson1-kubechaos.md
+- lesson3-config-maps.md
 theme: 
   name: material
   palette:

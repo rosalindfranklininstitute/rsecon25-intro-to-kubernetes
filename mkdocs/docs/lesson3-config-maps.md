@@ -1,0 +1,2 @@
+# Updating with ConfigMaps
+In lesson 2 you learnt how to update the Kubechaos app by making changes to the source code and then easily redeploying the app. In this lesson we will show you a way of updating your application outside of modifying the code directly. 
