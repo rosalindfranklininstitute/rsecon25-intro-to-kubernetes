@@ -42,7 +42,7 @@ const surprises = [
 const backgroundColor = process.env.BG_COLOR || 'white';
 const fontColor = process.env.FONT_COLOR || 'black';
 const borderSize = process.env.BORDER_SIZE || '2px';
-const borderType = process.env.BORDER_TYPE || 'dashed';
+const borderType = process.env.BORDER_STYLE|| 'dashed';
 const borderColor = process.env.BORDER_COLOR || '#ccc';
 
 function renderPage(surpriseContent) {

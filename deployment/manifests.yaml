@@ -21,26 +21,27 @@ spec:
         - containerPort: 3000
         env:
         - name: BG_COLOR
-          valueFrom: 
+          valueFrom:
             configMapKeyRef:
               name: kubechaos-style
               key: bg_color
         - name: FONT_COLOR
-          valueFrom: 
+          valueFrom:
             configMapKeyRef:
               name: kubechaos-style
               key: font_color
         - name: BORDER_COLOR
-          valueFrom: 
+          valueFrom:
             configMapKeyRef:
               name: kubechaos-style
               key: border_color
         - name: BORDER_SIZE
-          valueFrom: 
+          valueFrom:
             configMapKeyRef:
               name: kubechaos-style
-              key: border_size 
-        # can you edit this to add the BORDER_TYPE  env variable from the configMap
+              key: border_size
+        # can you edit this to add the BORDER_STYLE env variable from the configMap
+
 
 ---
 apiVersion: v1
