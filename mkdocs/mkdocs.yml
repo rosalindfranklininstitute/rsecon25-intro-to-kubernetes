@@ -6,7 +6,7 @@ nav:
 - kubernetes-dashboard.md
 - kubechaos.md
 theme: 
-  name: material
+  name: mkdocs
   palette:
     primary: teal
     accent: indigo
