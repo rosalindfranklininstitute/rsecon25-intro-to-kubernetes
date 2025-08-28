@@ -1,0 +1,6 @@
+service:
+  port: 4003
+  name: my-mocktail-svc
+serviceAccount:
+  name: "my-mocktail-sa"
+replicaCount: 3

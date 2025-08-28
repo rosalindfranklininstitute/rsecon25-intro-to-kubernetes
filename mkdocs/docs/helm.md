@@ -37,7 +37,8 @@ You can verify your installation by running `helm version`.
 ## 🍹 Deploying Mocktail with Helm
 [Mocktail](https://github.com/Huseyinnurbaki/mocktail) is a minimalist
 server that allows you to define and test custom API endpoints.
-We'll use it to demonstrate deploying using a Helm chart.
+We'll use it to demonstrate deploying a collection of kubernetes
+manifests to our cluster using a Helm chart.
 
 ### Understanding Helm Repositories
 Helm Charts can be found in two main ways:
@@ -57,21 +58,22 @@ repositories:
 helm repo update
 ```
 ### Deploying Mocktail
-Having added the Mocktail repository, the application can be
+Having added the Mocktail helm repository, the application can be
 deployed to our minikube cluster with
 ```
-helm install mocktail hhaluk/mocktail
+helm install mocktail hhaluk/mocktail -n mocktail --create-namespace
 ```
 That's it! In the background, Helm organised:
 
 - Downloading the chart and generating all necessary manifests
+- Creating a namespace for the manifests to be deployed to
 - Creating deployments and services
 - Starting the application
 
 ### Access Monktail
 Query the service
 ```
-minikube service mocktail-svc --url
+minikube service mocktail-svc --url -n mocktail
 ```
 The URL should take you to the Mocktail dashboard.
 
@@ -104,15 +106,19 @@ helm show values hhaluk/mocktail
 ``` 
 Let's override the default `replicaCount: 1` to have three replicas
 for the service. This can be done using the `--set OPTION=VALUE`
-syntax for the install command:
+syntax for the install/upgrade command:
 ```
-helm install my-mocktail hhaluk/mocktail --set replicaCount=3
+helm upgrade mocktail hhaluk/mocktail --set replicaCount=3 -n mocktail
 ```
 For larger number of changes, you can write a `custom-values.yaml`
-file and apply them with
+file and apply them with. We have provided a file at helm/custom-values.yaml
+for updating the existing helm release with an ingress. 
 ```
-helm install my-custom-mocktail hhaluk/mocktail -f custom-values.yaml
+helm upgrade -i my-mocktail hhaluk/mocktail -n my-mocktail --create-namespace -f helm/custom-values.yaml
 ```
+The above command can be used for a first time install of a helm release or to
+upgrade an existing release due to the `-i` flag.
+
 There are a large number of 
 community charts covering thousands of 
 web and infrastructure projects. Charts on
@@ -132,6 +138,23 @@ Then
 ```
 helm search repo <search-term>
 ```
+## (Optional) Cleaning up helm charts
+
+Helm comes with a handy process to also remove resources that have
+been added to the cluster. We can clean up everything we deployed 
+during this lession using: 
+```
+helm uninstall mocktail -n mocktail
+helm uninstall my-mocktail -n my-mocktail
+```
+You can check that the resources have been removed by using `kubectl` 
+or checking for the helm releases:
+```
+helm list -n mocktail
+helm list -n my-mocktail
+```
+Note: This will not remove the namespace itself for that you need to
+separately run `kubectl delete namespace mocktail my-mocktail
 
 📚 Further Reading 
 
