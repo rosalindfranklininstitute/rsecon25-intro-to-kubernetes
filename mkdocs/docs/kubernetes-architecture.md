@@ -97,3 +97,9 @@ Cluster
         ├── Container Runtime
         └── Kube-proxy
 ```
+
+## 📚 Further Reading
+
+- [Kubernetes project website](https://kubernetes.io/)
+- [Minikube documentation](https://minikube.sigs.k8s.io/docs/)
+
