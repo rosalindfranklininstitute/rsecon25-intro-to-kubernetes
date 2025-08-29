@@ -3,8 +3,15 @@ kind: ConfigMap
 metadata:
   name: kubechaos-style
 data:
-  bg_color: blue
+  bg_color:  teal
   font_color: white
-  border_color: yellow
+  border_color: grey
   border_size: 8px
   border_style: dotted
+
+  style.css: |
+    body { font-family: 'serif';
+           text-align: right;
+           margin-top: 10rem;
+           }
+
