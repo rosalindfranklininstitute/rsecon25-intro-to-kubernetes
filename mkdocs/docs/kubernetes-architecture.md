@@ -62,6 +62,8 @@ During this workshop we will be demonstrating Kubernetes using Minikube to creat
 | API Server          | Accessible via `kubectl` on your host |
 | etcd, Scheduler, Controller Manager | All run inside the Minikube VM |
 
+Minikube supports many standard Kubernetes features as well as third-party extensions in the form of [addons](https://minikube.sigs.k8s.io/docs/handbook/deploying/#addons).
+
 ### Key Differences:
 - **Single-node setup**: Control plane and worker node are co-located.
 - **Simplified networking**: Easier to manage locally.
