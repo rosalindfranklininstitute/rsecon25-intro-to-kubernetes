@@ -5,8 +5,10 @@ nav:
 - kubernetes-architecture.md
 - kubernetes-dashboard.md
 - kubechaos.md
+- kubechaos-update.md
+- helm.md
 theme: 
-  name: mkdocs
+  name: material
   palette:
     primary: teal
     accent: indigo
