@@ -9,14 +9,32 @@ Pods can use the information in ConfigMaps either as environmental variables or 
 
 ## Configuring the Style
 
-In web applications the style is often configured idenpendently of the apllication code. Kubernetes offers an easy and useful way to update pods from ConfigMaps without having to redeploy anything or rebuild your container.
+In web applications the style is often configured idependently of the apllication code. Kubernetes offers an easy and useful way to update pods from ConfigMaps without having to redeploy anything or rebuild the container.
 
-Let's deploy a ConfigMap to our cluster:
-```
-kubectl create -f deployment/style-config.yml
+We currently have a configMap running in our cluseter. You can view it either through the minikube dashboard by clicking on ConfigMap in the side bar, or by running
 
 ```
-Now we will have to make some edits to our deployment manifest - `manifest.yml`. Please open up this file and uncomment the `env:` block at line 22, to line 42. Your containers `spec` should now read:
+kubectl describe configmap kubechaos-style
+
+```
+
+This ConfigMap controls the style of the website. We can change the colours and fonts without needing to change the underlying softwre of the container.
+
+To edit the ConfigMap type the following into a terminal
+```
+kubectl edit configmap kubechaos-style
+```
+Refresh your web browser. What has happened?
+
+You will have noticed that some of the changes in your configMap have made changes but others have not. The fonts have changed but the colours have not. To get the colours to change run the following:
+```
+kubectl rollout restart deployment kubechaos
+```
+Refresh your web browser, what do you see now?
+
+## Explanation
+
+We will now look at `manifest.yml`. Please open up this file and uncomment scroll to the  block at line 22, to line 54.
 
 ```
     spec:
@@ -47,13 +65,19 @@ Now we will have to make some edits to our deployment manifest - `manifest.yml`.
               name: kubechaos-style
               key: border_size
         # can you edit this to add the BORDER_TYPE  env variable from the configMap
+                volumeMounts:
+        - name: style-env
+          mountPath: "/src/public/"
+          readOnly: true
+      volumes:
+      - name: style-env
+        configMap:
+          name: kubechaos-style
+          items:
+            - key: "style.css"
+              path: "style.css"
 ```
 
-Apply this updated deployment to the cluster with:
-```
-kubectl apply -f deployment/manifests.yml
-```
-Refresh your application. What has happened?
 
 
 Open up the `style-config.yml` file. You will see the layout of the configMap which alters the colors of the background,borders and text. Edit some of the variables with new colours. Then apply the changes to your configMap on the cluster with:
