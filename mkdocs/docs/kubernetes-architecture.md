@@ -3,16 +3,16 @@
 ## Overview
 Kubernetes is a powerful container orchestration platform that automates deployment, scaling, and management of containerized applications. Its architecture is divided into two main parts:
 
-- **Control Plane**
-- **Worker Nodes**
+- Control Plane
+- Worker Nodes
 
 ---
 
 ## 🧭 Control Plane
 
-The **Control Plane** is the brain of the Kubernetes cluster. It manages the cluster's state and makes decisions about scheduling, scaling, and responding to events.
+The **Control Plane** is the brain of the Kubernetes cluster. It manages the cluster's state and makes decisions about scheduling, scaling, and responding to events. The Control Plane has individual components running as pods on the node, each responsible for various tasks. 
 
-### Key Components:
+#### Key Components:
 - **API Server (`kube-apiserver`)**:  
   Acts as the front-end for the Kubernetes control plane. All interactions (kubectl, dashboard, etc.) go through this RESTful API.
 
@@ -27,11 +27,11 @@ The **Control Plane** is the brain of the Kubernetes cluster. It manages the clu
 
 ---
 
-## 🧱 2. Worker Nodes
+## 🧱 Worker Nodes
 
 Worker nodes are where your application containers actually run. Each node has the following components:
 
-### Key Components:
+#### Key Components:
 - **Kubelet**:  
   An agent that runs on each node. It communicates with the API server and ensures containers are running as expected.
 
@@ -43,7 +43,7 @@ Worker nodes are where your application containers actually run. Each node has t
 
 ---
 
-## 🔄 3. How These Components Work Together
+## 🔄 How do these components work together?
 
 1. You submit a deployment via `kubectl`.
 2. The **API Server** receives the request.
@@ -80,3 +80,24 @@ Minikube is a local Kubernetes implementation that runs a single-node cluster in
 - Kubernetes separates concerns between managing the cluster (control plane) and running workloads (worker nodes).
 - Minikube mimics this architecture in a simplified, single-node environment.
 - Understanding these components helps you debug, optimize, and scale your applications effectively.
+
+# Kubernetes Architecture Overview
+```
+Cluster
+├── Control Plane
+│   ├── API Server (kube-apiserver)
+│   ├── Scheduler (kube-scheduler)
+│   ├── Controller Manager (kube-controller-manager)
+│   └── etcd (Key-Value Store)
+│
+└── Worker Nodes
+    ├── Node 1
+    │   ├── Kubelet
+    │   ├── Container Runtime (e.g., containerd)
+    │   └── Kube-proxy
+    │
+    └── Node N
+        ├── Kubelet
+        ├── Container Runtime
+        └── Kube-proxy
+```
