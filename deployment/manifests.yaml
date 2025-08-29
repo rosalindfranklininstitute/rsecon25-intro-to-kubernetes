@@ -19,39 +19,39 @@ spec:
         image: local/kubechaos:v1
         ports:
           - containerPort: 3000
-      #   env:
-      #     - name: BG_COLOR
-      #       valueFrom:
-      #         configMapKeyRef:
-      #           name: kubechaos-style
-      #           key: bg_color
-      #     - name: FONT_COLOR
-      #       valueFrom:
-      #         configMapKeyRef:
-      #           name: kubechaos-style
-      #           key: font_color
-      #     - name: BORDER_COLOR
-      #       valueFrom:
-      #         configMapKeyRef:
-      #           name: kubechaos-style
-      #           key: border_color
-      #     - name: BORDER_SIZE
-      #       valueFrom:
-      #         configMapKeyRef:
-      #           name: kubechaos-style
-      #           key: border_size
-      #     #can you edit this to add the BORDER_STYLE env variable from the configMap
-      #   volumeMounts:
-      #   - name: style-env
-      #     mountPath: "/src/public/"
-      #     readOnly: true
-      # volumes:
-      # - name: style-env
-      #   configMap:
-      #     name: kubechaos-style
-      #     items:
-      #       - key: "style.css"
-      #         path: "style.css"
+        env:
+          - name: BG_COLOR
+            valueFrom:
+              configMapKeyRef:
+                name: kubechaos-style
+                key: bg_color
+          - name: FONT_COLOR
+            valueFrom:
+              configMapKeyRef:
+                name: kubechaos-style
+                key: font_color
+          - name: BORDER_COLOR
+            valueFrom:
+              configMapKeyRef:
+                name: kubechaos-style
+                key: border_color
+          - name: BORDER_SIZE
+            valueFrom:
+              configMapKeyRef:
+                name: kubechaos-style
+                key: border_size
+          #can you edit this to add the BORDER_STYLE env variable from the configMap
+        volumeMounts:
+        - name: style-env
+          mountPath: "/src/public/"
+          readOnly: true
+      volumes:
+      - name: style-env
+        configMap:
+          name: kubechaos-style
+          items:
+            - key: "style.css"
+              path: "style.css"
 
 
 
@@ -69,3 +69,21 @@ spec:
     protocol: TCP
     port: 3000
     targetPort: 3000
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubechaos-style
+data:
+  bg_color:  white
+  font_color: black
+  border_color: black
+  border_size: 4px
+  border_style: dashed
+
+  style.css: |
+    body { font-family: 'sans-serif';
+           text-align: center;
+           margin-top: 5rem;
+           }
