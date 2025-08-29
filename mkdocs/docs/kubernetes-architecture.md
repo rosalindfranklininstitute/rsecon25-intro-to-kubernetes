@@ -8,42 +8,35 @@ Kubernetes is a powerful container orchestration platform that automates deploym
 
 ---
 
-## 🧭 Control Plane
+## Control Plane
 
 The **Control Plane** is the brain of the Kubernetes cluster. It manages the cluster's state and makes decisions about scheduling, scaling, and responding to events. The Control Plane has individual components running as pods on the node, each responsible for various tasks. 
 
 #### Key Components:
-- **API Server (`kube-apiserver`)**:  
-  Acts as the front-end for the Kubernetes control plane. All interactions (kubectl, dashboard, etc.) go through this RESTful API.
+- API Server - Acts as the front-end for the Kubernetes control plane. All interactions (kubectl, dashboard, etc.) go through this RESTful API. `kube-apiserver-<node-name>`
 
-- **Controller Manager (`kube-controller-manager`)**:  
-  Runs controllers that handle routine tasks like node health checks, replication, and endpoint management.
+- Controller Manager - Runs controllers that handle routine tasks like node health checks, replication, and endpoint management. `kube-controller-manager-<node-name>`
 
-- **Scheduler (`kube-scheduler`)**:  
-  Assigns newly created pods to nodes based on resource availability and constraints.
+- Scheduler - Assigns newly created pods to nodes based on resource availability and constraints. `kube-scheduler-<node-name>`
 
-- **etcd**:  
-  A distributed key-value store that holds all cluster data (state, configuration, etc.).
+- etcd - A distributed key-value store that holds all cluster data (state, configuration, etc.). `etcd-<node-name>`
 
 ---
 
-## 🧱 Worker Nodes
+## Worker Nodes
 
 Worker nodes are where your application containers actually run. Each node has the following components:
 
 #### Key Components:
-- **Kubelet**:  
-  An agent that runs on each node. It communicates with the API server and ensures containers are running as expected.
+- Kubelet - An agent that runs on each node. It communicates with the API server and ensures containers are running as expected.
 
-- **Container Runtime**:  
-  Software responsible for running containers (e.g., Docker, containerd).
+- Container Runtime - Software responsible for running containers (e.g., Docker, containerd).
 
-- **Kube-proxy**:  
-  Handles network routing and load balancing for services within the cluster.
+- Kube-proxy - Handles network routing and load balancing for services within the cluster.
 
 ---
 
-## 🔄 How do these components work together?
+## How do these components work together?
 
 1. You submit a deployment via `kubectl`.
 2. The **API Server** receives the request.
@@ -54,13 +47,14 @@ Worker nodes are where your application containers actually run. Each node has t
 
 ---
 
-# 🧪 Minikube Architecture
+## Minikube Architecture
 
-Minikube is a local Kubernetes implementation that runs a single-node cluster inside a VM or container. It’s perfect for testing and development.
+During this workshop we will be demonstrating Kubernetes using Minikube to create clusters and deploy resources. Minikube is a tool that lets you run a single-node Kubernetes cluster locally on your machine. It’s designed for developers and learners who want to experiment with Kubernetes without needing a full multi-node setup.
 
-## How Minikube Maps to Standard Kubernetes:
 
-| Standard Kubernetes | Minikube Equivalent |
+### How standard Kubernetes architecture maps to Minikube:
+
+| Standard Kubernetes | Minikube  |
 |---------------------|---------------------|
 | Control Plane       | Runs inside the Minikube VM/container |
 | Worker Node         | Same VM/container acts as the worker node |
@@ -75,13 +69,13 @@ Minikube is a local Kubernetes implementation that runs a single-node cluster in
 
 ---
 
-## 🧰 Summary
+## Summary
 
 - Kubernetes separates concerns between managing the cluster (control plane) and running workloads (worker nodes).
 - Minikube mimics this architecture in a simplified, single-node environment.
 - Understanding these components helps you debug, optimize, and scale your applications effectively.
 
-# Kubernetes Architecture Overview
+## Kubernetes Architecture Overview
 ```
 Cluster
 ├── Control Plane
