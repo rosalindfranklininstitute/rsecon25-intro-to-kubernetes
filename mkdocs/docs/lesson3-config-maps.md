@@ -33,6 +33,9 @@ Change the following variables:
   font_color: white
 
 ```
+> ⚠️  Note you will need to use specific variables for colors:
+>  - they can be in hex rgb format e.g. #000000 or #0000ff
+>  - or they can be in css names e.g. black or blue
 
 Refresh your web browser. What has happened?
 
@@ -105,7 +108,9 @@ body { font-family: 'sans-serif';
 ```
 
 Now let's edit these variables in the ConfigMap keeping the structure of the file intact:
-
+> ⚠️  Note you will need to use specific variables for `font-family and `text-align`:
+>  - `text-align` can be `center`, `right`, `left`
+>  - `font-family` has to belong to the websafe fonts e.g. `serif`, `arial`, `garamond`
 ```
 kubectl edit configmap style-kubechoas
 ```
@@ -133,7 +138,7 @@ Here we are mounting a file as a volume into the pod. The file is being written 
 
 This section of the deployment creates a volume called `style-env` and then mounts it as a volume in the container. This volume has containers the `style.css` file and is mounted on the path the application expects.
 
-To see the mainfest of the ConfigMap you can scroll down to line 73 in `manifests.yml`:
+To see the mainfest of the original ConfigMap (before our edits) you can scroll down to line 73 in `manifests.yml`:
 
 ```
 apiVersion: v1
@@ -154,6 +159,7 @@ data:
            }
 
 ```
+For a production system you can version control your changes to a ConfigMap as a manifest and apply it to your cluster.
 
 ## 📚 Further Reading
 
