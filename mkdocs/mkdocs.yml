@@ -5,7 +5,9 @@ nav:
 - kubernetes-architecture.md
 - lesson0-kubernetes-dashboard.md
 - lesson1-kubechaos.md
+- lesson2-kubechaos-update.md
 - lesson3-config-maps.md
+- lesson4-helm.md
 theme: 
   name: material
   palette:
