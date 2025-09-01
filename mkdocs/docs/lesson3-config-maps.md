@@ -26,11 +26,11 @@ kubectl edit configmap kubechaos-style
 ```
 Change the following variables:
 ```
-  bg_color: teal
-  border_color: grey
-  border_size: 8px
-  border_style: dotted
-  font_color: white
+  bg_color:  white
+  font_color: black
+  border_color: black
+  border_size: 4px
+  border_style: dashed
 
 ```
 > ⚠️  Note you will need to use specific variables for colors:
