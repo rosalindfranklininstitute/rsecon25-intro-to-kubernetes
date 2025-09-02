@@ -35,6 +35,7 @@ you'll see it contains definitions for:
 
 - A Deployment (manages pods)
 - A Service (provides networking)
+- A ConfigMap (explored in lesson 3)
 
 Notice the image tag `local/kubechaos:v1` in the manifest
 matches what we just built.
@@ -142,7 +143,7 @@ First, let's set up a watch to monitor the pods in real-time:
 ```
 kubectl get pods -w
 ```
-Next, in a new terminal, run the following `kubectle scale` command:
+Next, in a new terminal, run the following `kubectl scale` command:
 ```
 kubectl scale deployment kubechaos --replicas=3
 ```
