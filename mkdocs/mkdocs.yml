@@ -8,6 +8,9 @@ nav:
 - lesson2-kubechaos-update.md
 - lesson3-config-maps.md
 - lesson4-helm.md
+- Extras:
+  - kubechaos-extra.md
+
 theme: 
   name: material
   palette:
