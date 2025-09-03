@@ -2,9 +2,11 @@
 marp: true
 theme: default
 paginate: true
-
+header:
+  <img src='./mkdocs/docs/assets/CN-SIG-logo.png' width='200px' style='padding-left:1050px'></img>
 ---
 <style>
+
 section {
   background: white;
   color: black
@@ -16,12 +18,13 @@ h1 {color: teal}
     margin-left: auto;
     margin-right: auto;
 }
+
 </style>
 
 # Deploying a Web Application with Kubernetes
 ## A Cloud Native SIG Workshop
 ### RSECon25 Thursday 11th September
-Authors: Laura Shemilt, Lewis Sampon, Piper Fowler-Wright and Alex Lubbock
+Authors: Laura Shemilt, Lewis Sampson, Piper Fowler-Wright and Alex Lubbock
 
 
 ---
@@ -241,3 +244,6 @@ or by reviewing the Deployments/Pods page in the Web Dashboard.
 * Deleted a pod and watched it self heal
 * Learnt Kubernetes concepts of Pods, Deployments and Replica Sets.
 * Scaled the deployment to 3 replica sets
+
+---
+# Lesson 2: Updating the Kubechaos App
