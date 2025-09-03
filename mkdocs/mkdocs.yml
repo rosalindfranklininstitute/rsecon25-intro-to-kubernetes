@@ -1,7 +1,7 @@
 site_name: RSECon25 Workshop- Deploying a Web Application with Kubernetes
 nav:
 - index.md
-- Pre-reading:
+- Introduction:
   - why-kubernetes.md
   - kubernetes-architecture.md
 - Lessons:
