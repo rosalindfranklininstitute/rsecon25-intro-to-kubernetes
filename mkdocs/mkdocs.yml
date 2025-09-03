@@ -9,7 +9,7 @@ nav:
   - lesson1-kubechaos.md
   - lesson2-kubechaos-update.md
   - Lessons 2 extension task:
-    - Multiple Deployments: kubechaos-extra.md
+    - Multiple Deployments: lesson2-kubechaos-extra.md
   - lesson3-config-maps.md
   - lesson4-helm.md
 theme: 
