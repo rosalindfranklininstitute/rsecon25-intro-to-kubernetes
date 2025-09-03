@@ -247,3 +247,35 @@ or by reviewing the Deployments/Pods page in the Web Dashboard.
 
 ---
 # Lesson 2: Updating the Kubechaos App
+*How do you update a running application without breaking it?*
+
+In this lesson, we'll explore redeployment in Kubernetes by applying changes to both the application image and specification.
+
+---
+# Lesson 2: Updating the Kubechaos App
+Open `image/app.js` and find the `suprises` variable (line 7):
+
+```javascript
+const surprises = [
+  `<h2>🎯 Click the target!</h2>
+   <div style="font-size:100px;cursor:pointer;" onclick="alert('You hit it! 🎉')">🎯</div>`,
+
+  `<h2>😂 Joke of the moment</h2>
+   <p>Why did the dolphin get a job in Kubernetes?<br>Because it already knew how to work in pods.</p>`,
+
+  // ... more entries
+];
+```
+---
+# Lesson 2: Updating the Kubechaos App
+Your tasks:
+
+1. Add 2-3 of you own surprises with jokes or other HTML content
+2. Remove the original surprise elements
+3. Finally, locate the "KubeChaos @ RSECon25!" title and replace it with "<your-name\> @ RSECon25!"
+
+
+> ⚠️  JavaScript Array Syntax:
+>
+> - Each element is wrapped in backticks `\` (multi-line strings)
+> - Elements are separated by commas

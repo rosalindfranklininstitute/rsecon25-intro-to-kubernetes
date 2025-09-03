@@ -18,7 +18,7 @@ const surprises = [
   // ... more entries
 ];
 ```
-You tasks:
+Your tasks:
 
 1. Add 2-3 of you own surprises with jokes or other HTML content
 2. Remove the original surprise elements
@@ -27,7 +27,7 @@ You tasks:
 
 > ⚠️  JavaScript Array Syntax:
 >
-> - Each element is wrapped in backticks \` (multi-line strings)
+> - Each element is wrapped in backticks `\` (multi-line strings)
 > - Elements are separated by commas
 
 
