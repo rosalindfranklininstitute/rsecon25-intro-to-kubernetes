@@ -547,3 +547,184 @@ data:
 * You can update your application without changing the code or the deployment
 * environmental variables require restarts, volumes do not
 * For a production system you can version control your changes to a ConfigMap as a manifest and apply it to your cluster.
+
+---
+# Lesson 4: Helm
+## Introduction
+Helm is a package manager for Kubernetes that provides a convenient way to share and install community applications.
+
+By packaging manifests into reusable 'Charts', complex projects can be installed with a single command, including any dependencies.
+
+
+In this lesson, we'll deploy a community application available as
+a Helm chart to our minikube cluster.
+
+---
+# Lesson 4: Helm
+
+> ⚠️  Security
+>
+> Like all code on the internet, Helm charts can contain malicious content.
+> Only install Helm charts from trusted sources. Vetting charts using Helm's
+> `template` and `verify` commands and other best practices
+> are discussed in the `sysdig` article in Further Reading in the documentation at: https://rosalindfranklininstitute.github.io/rsecon25-intro-to-kubernetes/
+
+---
+# Lesson 4: Helm
+## Prerequisites
+On Linux/WSL, Helm can be installed as a snap package
+```
+sudo snap install helm --classic
+```
+On macOS, it is available through Homebrew
+```
+brew install helm
+```
+Other Windows users can use the Chocolately package manager:
+```
+choco install kubernetes-helm
+```
+
+You can verify your installation by running `helm version`.
+
+---
+# Lesson 4: Helm
+
+## 🍹 Deploying Mocktail with Helm
+Moktail, https://github.com/Huseyinnurbaki/mocktail, is a minimalist
+server that allows you to define and test custom API endpoints.
+
+We'll use it to demonstrate deploying a collection of kubernetes
+manifests to our cluster using a Helm chart.
+
+Helm Charts can be found in two main ways:
+
+- On community repositories like Artifact Hub, with many projects
+- On individual repositories e.g. on GitHub for specific projects
+
+---
+# Lesson 4: Helm
+
+Mocktail provides its own Helm repository, which we can add to
+Helm with
+```
+helm repo add hhaluk https://huseyinnurbaki.github.io/charts/
+
+```
+> 💡 **Tip** It's a good idea to periodically get Helm to check for updates from added
+repositories:
+> ```
+> helm repo update
+> ```
+
+---
+# Lesson 4: Helm
+### Deploying Mocktail
+Having added the Mocktail helm repository, the application can be
+deployed to our minikube cluster with
+```
+helm install mocktail hhaluk/mocktail -n mocktail --create-namespace
+```
+That's it! In the background, Helm organised:
+
+- Downloading the chart and generating all necessary manifests
+- Creating a namespace for the manifests to be deployed to
+- Creating deployments and services
+- Starting the application
+
+---
+# Lesson 4: Helm
+Query the service
+```
+minikube service mocktail-svc --url -n mocktail
+```
+The URL should take you to the Mocktail dashboard.
+
+>**Extra** You can also use your minikube dashboard or the `kubectl` commands you have learned to explore the pods and deployments associated with >Mocktail.
+
+---
+# Lesson 4: Helm
+**Optional:** Try creating a custom endpoint in the dashboard:
+1. Add a new GET endpoint: `/surprise`
+2. Set the response:
+```
+{
+      "message": "Hello from Kubernetes!",
+      "pod": "mocktail-pod",
+      "surprise": "🎲"
+}
+```
+ 3. Test it with curl from a Terminal:
+```
+curl <mocktail-dashboard-url:PORT>/mocktail/surprise
+```
+
+---
+# Lesson 4: Helm
+## Customising Charts with Values
+A powerful feature of Helm is the ability to customise applications with your own parameters.
+First, view available configuration options for Mocktail:
+```
+helm show values hhaluk/mocktail
+```
+Let's override the default `replicaCount: 1` to have three replicas
+for the service:
+```
+helm upgrade mocktail hhaluk/mocktail --set replicaCount=3 -n mocktail
+```
+---
+# Lesson 4: Helm
+For larger number of changes, you can write a `custom-values.yaml`.
+We have provided a file at helm/custom-values.yaml for updating the existing helm release with an ingress.
+```
+helm upgrade -i my-mocktail hhaluk/mocktail -n my-mocktail --create-namespace -f helm/custom-values.yaml
+```
+The above command can be used for a first time install of a helm release or to
+upgrade an existing release due to the `-i` flag.
+
+This upgrade has changed the container port that the service listens on.
+
+---
+# Lesson 4: Helm
+There are a large number of community charts covering thousands of
+web and infrastructure projects.
+Charts on Artifact Hub https://artifacthub.io/ may be searched directly from the command line with:
+```
+helm search hub <search-term>
+```
+---
+# Lesson 4: Helm
+You can also search in any repositories you have added. For example, first adding the popular Bitnami
+Library https://github.com/team-maravi/bitnami-charts:
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+```
+Then:
+```
+helm search repo <search-term>
+```
+---
+# Lesson 4: Helm
+### Cleaning up
+We can clean up everything we deployed during this lession using:
+```
+helm uninstall mocktail -n mocktail
+helm uninstall my-mocktail -n my-mocktail
+```
+You can check that the resources have been removed by using `kubectl` :
+```
+helm list -n mocktail
+helm list -n my-mocktail
+```
+> :warning: Note: This will not remove the namespace itself for that you need to
+> separately run `kubectl delete namespace mocktail my-mocktail
+
+---
+# Lesson 4: Helm
+### Summary
+* Helm is a package manager for Kubernetes that provides a convenient way to share and install community applications.
+* Installed an example application via Helm
+* Configuring the Helm chart through adding `custom-values`
+* How to explore repos and Artifact Hub
+* Cleaning up the application
