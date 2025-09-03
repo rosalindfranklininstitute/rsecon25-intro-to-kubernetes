@@ -1,7 +1,9 @@
 import { createServer } from 'http';
 import os from 'os';
+import express from 'express';
 
 const port = process.env.PORT || 3000;
+
 
 // Array of HTML fragments (no DOM manipulation needed)
 const surprises = [
@@ -36,6 +38,14 @@ const surprises = [
    </script>`
 ];
 
+  
+//Style from env variables
+const backgroundColor = process.env.BG_COLOR || 'white';
+const fontColor = process.env.FONT_COLOR || 'black';
+const borderSize = process.env.BORDER_SIZE || '2px';
+const borderStyle = process.env.BORDER_STYLE|| 'dashed';
+const borderColor = process.env.BORDER_COLOR || '#ccc';
+
 function renderPage(surpriseContent) {
   return `
 <!DOCTYPE html>
@@ -44,10 +54,12 @@ function renderPage(surpriseContent) {
   <meta charset="UTF-8">
   <title>KubeChaos @ RSECon25</title>
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 5rem; }
-    #playground { height: 400px; border: 2px dashed #ccc; margin-top: 20px; }
+    body { font-family: 'sans-serif'; text-align: center; margin-top: 5rem; background-color: ${ backgroundColor};
+    color: ${fontColor};}
+    #playground { height: 400px; border: ${borderSize} ${borderStyle} ${borderColor}; margin-top: 20px; }
     button { padding: 10px 20px; font-size: 1rem; cursor: pointer; }
   </style>
+  <link rel="stylesheet" href="/style.css" >
 </head>
 <body>
   <h1>KubeChaos @ RSECon25!</h1>
@@ -60,16 +72,16 @@ function renderPage(surpriseContent) {
 </html>
 `;
 };
+const server = express();
 
-const server = createServer((_req, res) => {
+server.use(express.static('public'));
+
+server.get('/', (req, res) => {
   const randomSurprise = surprises[Math.floor(Math.random() * surprises.length)];
-  res.writeHead(200, {
-    'Content-Type': 'text/html',
-    'Cache-Control': 'no-cache, no-store',
-  });
-  res.end(renderPage(randomSurprise));
+  res.set("Cache-Control", "no-cache, no-store");
+  res.set("Content-Type", "text/html");
+  res.send(renderPage(randomSurprise));
 });
 
-server.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+server.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');});

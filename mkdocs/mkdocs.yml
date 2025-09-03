@@ -3,10 +3,11 @@ nav:
 - index.md
 - why-kubernetes.md
 - kubernetes-architecture.md
-- kubernetes-dashboard.md
-- kubechaos.md
-- kubechaos-update.md
-- helm.md
+- lesson0-kubernetes-dashboard.md
+- lesson1-kubechaos.md
+- lesson2-kubechaos-update.md
+- lesson3-config-maps.md
+- lesson4-helm.md
 theme: 
   name: material
   palette:
