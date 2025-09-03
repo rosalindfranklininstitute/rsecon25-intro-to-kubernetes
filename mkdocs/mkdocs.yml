@@ -1,16 +1,17 @@
 site_name: RSECon25 Workshop- Deploying a Web Application with Kubernetes
 nav:
 - index.md
-- why-kubernetes.md
-- kubernetes-architecture.md
-- lesson0-kubernetes-dashboard.md
-- lesson1-kubechaos.md
-- lesson2-kubechaos-update.md
-- lesson3-config-maps.md
-- lesson4-helm.md
-- Extras:
-  - kubechaos-extra.md
-
+- Pre-reading:
+  - why-kubernetes.md
+  - kubernetes-architecture.md
+- Lessons:
+  - lesson0-kubernetes-dashboard.md
+  - lesson1-kubechaos.md
+  - lesson2-kubechaos-update.md
+  - Lessons 2 extension task:
+    - Multiple Deployments: kubechaos-extra.md
+  - lesson3-config-maps.md
+  - lesson4-helm.md
 theme: 
   name: material
   palette:

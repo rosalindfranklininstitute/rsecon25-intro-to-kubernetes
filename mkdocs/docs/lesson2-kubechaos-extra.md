@@ -16,7 +16,12 @@ kubectl get deployments
 ```
 
 ###  Update Your Manifest for Dual Deployments
-Replace `deployment/manifests.yaml` with this new specification:
+Open `deployment/manifests.yaml` and;
+
+  - Create an additional deployment called `kubechaos-custom`, which uses our newer version`local/kubechoas:v2`, with additional labels `spec.selector.matchLabels.version: custom` and `spec.template.metadata.labels: custom`.
+  - Update the original deployment to be called `kubechaos-original` with labels for `original`.
+
+Or simply replace `deployment/manifests.yaml` with this new specification:
 <details><summary>deployment/manifests.yaml</summary>
 ```yaml
 # Original version deployment
@@ -108,7 +113,7 @@ You should now see a `kubechaos-original`
 If we now re-run the `minikube service` command
 (note the URL port will have changed),
 ```
-minikube service kubechaos-svc
+minikube service kubechaos-svc --url
 ```
 you may be served either the original surprises or your
 new ones. More information on the pods associated with
