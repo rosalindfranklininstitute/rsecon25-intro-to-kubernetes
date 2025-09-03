@@ -279,3 +279,271 @@ Your tasks:
 >
 > - Each element is wrapped in backticks `\` (multi-line strings)
 > - Elements are separated by commas
+
+---
+# Lesson 2: Updating the Kubechaos App
+Once you've made your changes, build a new container image with a `v2` tag:
+```
+minikube image build -t local/kubechaos:v2 image
+```
+Verify your new image was created:
+```
+minikube image ls
+```
+You should see  both `local/kubechaos:v1` and `local/kubechaos:v2` listed.
+
+---
+# Lesson 2: Updating the Kubechaos App
+Open `deployment/manifests.yaml` and update the container's image tag:
+```yaml
+    spec:
+      containers:
+      - name: app
+        image: local/kubechaos:v2  # Changed from v1
+```
+Make sure to save the file then apply your changes to the cluster:
+```
+kubectl apply -f deployment/manifests.yaml
+```
+Check when the deployment is complete:
+```
+kubectl rollout status deployment kubechaos
+```
+---
+# Lesson 2: Updating the Kubechaos App
+Return to the browser window/URL with the running application - on refresh you should now see your own jokes and custom title!
+> 💡 If we had simply modified and rebuilt the `v1` image, it would have been sufficient to restart the deployment (`kubectl rollout restart deploy kubechaos`).
+> Since we changed the manifest, however, a redeployment is necessary.
+
+---
+# Lesson 2: Updating the Kubechaos App
+
+## Summary
+* Updated the container image
+* Redeployed the application with a single command
+* No need to restart or rebuild systems for a redeploy
+
+---
+# Lesson 3: Updating with ConfigMaps
+* In lesson 2 you learnt how to update the Kubechaos app by making changes to the source code and then easily redeploying the app.
+* In this lesson we will update the application without modifying the code using ConfigMaps
+
+### What is a ConfigMap ?
+
+* It is a Kubernetes API object which stores data in key-value pairs.
+* Non-confidential data only
+
+Pods can use the information in ConfigMaps either as:
+* environmental variables
+* mounted as a volume.
+
+---
+# Lesson 3: Updating with ConfigMaps
+## Configuring the Style with Environmental variables
+
+In web applications the style is often configured idependently of the application code.
+
+We currently have a configMap running in our cluster. View it either through the minikube dashboard or with:
+
+```
+kubectl describe configmap kubechaos-style
+
+```
+---
+# Lesson 3: Updating with ConfigMaps
+
+```
+Name:         kubechaos-style
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+border_color:
+----
+grey
+
+border_size:
+----
+8px
+
+border_style:
+----
+dotted
+
+font_color:
+----
+white
+
+style.css:
+----
+body { font-family: 'garamond';
+       text-align: left;
+       margin-top: 10rem;}
+
+bg_color:
+----
+teal
+
+BinaryData
+====
+
+Events:  <none>
+```
+---
+# Lesson 3: Updating with ConfigMaps
+This ConfigMap controls the style of the website. .
+
+Change the colors and border of the web application. To edit the ConfigMap:
+```
+kubectl edit configmap kubechaos-style
+```
+
+---
+# Lesson 3: Updating with ConfigMaps
+Change the following variables:
+```
+  bg_color:  white
+  font_color: black
+  border_color: black
+  border_size: 4px
+  border_style: dashed
+
+```
+> ⚠️  Note you will need to use specific variables for colors:
+>  - they can be in hex rgb format e.g. #000000 or #0000ff
+>  - or they can be in css names e.g. black or blue
+
+Refresh your web browser. What has happened?
+
+---
+# Lesson 3: Updating with ConfigMaps
+You will have noticed that your changes have not been applied, the styling remains the same.
+
+To get the colours to change run the following:
+```
+kubectl rollout restart deployment kubechaos
+```
+Refresh your web browser, what do you see now?
+
+---
+# Lesson 3: Updating with ConfigMaps
+### Explanation
+
+The variables that you edited in the ConfigMap are applied as **environmental variables**.
+ To get the pod to pick up on it's new environment it needs to be remade. The quickest way to restart everything is to use the `kubectl rollout restart` command we used above.
+
+ ---
+ # Lesson 3: Updating with ConfigMaps
+We will now look at `manifest.yml`. Please open up this file and scroll to the  block at line 22, to line 44. In this part of the deploymnet we set the `env` section of the container with values from the ConfigMap.
+
+```
+    spec:
+      containers:
+      - name: app
+        image: local/kubechaos:v1
+        ports:
+        - containerPort: 3000
+        env:
+        - name: BG_COLOR
+          valueFrom:
+            configMapKeyRef:
+              name: kubechaos-style
+              key: bg_color
+     ...
+```
+---
+# Lesson 3: Updating with ConfigMaps
+In this section we injected variables from the ConfigMap into the pod as environmental variables to make changes without having to rebuild the image:
+ * ideal for applications that read configuration through environment variables
+ *  doesn't require file handling
+ * Requires restart for changes to take effect.
+
+Now we will look at mounting our ConfigMap as a volume. This method is used when applications are expecting **configuration files** rather than **environmental variables**.
+
+---
+# Lesson 3: Updating with ConfigMaps
+
+Usually a website's style is configured through a `.css` file, rather than  environmental variables.
+
+Look ConfigMap either through the Minikube Dashboard or with:
+`kubectl describe configmap style-kubechaos`
+There is a definition of a css file :
+
+```
+style.css:
+----
+body { font-family: 'sans-serif';
+       text-align: center;
+       margin-top: 5rem;}
+
+```
+---
+# Lesson 3: Updating with ConfigMaps
+Now let's edit these variables in the ConfigMap keeping the structure of the file intact:
+```
+kubectl edit configmap style-kubechoas
+```
+Refresh your browser? What happens now?
+> ⚠️  Note you will need to use specific variables for `font-family and `text-align`:
+>  - `text-align` can be `center`, `right`, `left`
+>  - `font-family` has to belong to the websafe fonts e.g. `serif`, `arial`, `garamond`
+
+---
+# Lesson 3: Updating with ConfigMaps
+
+## Explanation
+
+Here we are mounting a file as a volume into the pod. The file is being written by the values in the in the ConfigMap. When we change the values they are immediately picked up by the pod without it being restarted.
+
+---
+# Lesson 3: Updating with ConfigMaps
+
+Open the `manifest.yml` and scroll to line 44 to 54:
+
+```   container:
+            ...
+        volumeMounts:
+        - name: style-env
+          mountPath: "/src/public/"
+          readOnly: true
+      volumes:
+      - name: style-env
+        configMap:
+          name: kubechaos-style
+          items:
+            - key: "style.css"
+              path: "style.css"
+```
+
+This creates a volume called `style-env` and  mounts it as a volume. This volume has  the `style.css` file  mounted on the path the application expects.
+
+---
+# Lesson 3: Updating with ConfigMaps
+To see the mainfest of the original ConfigMap (before our edits) you can scroll down to line 73 in `manifests.yml`:
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubechaos-style
+data:
+  bg_color:  white
+  font_color: black
+...
+
+  style.css: |
+    body { font-family: 'sans-serif';
+   ...
+           }
+
+```
+---
+# Lesson 3: Updating Config Maps
+### Summary:
+* ConfigMaps are key-value pair API objects
+* They can be used to inject environmental variables or as volumes
+* You can update your application without changing the code or the deployment
+* environmental variables require restarts, volumes do not
+* For a production system you can version control your changes to a ConfigMap as a manifest and apply it to your cluster.
