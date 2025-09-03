@@ -22,7 +22,7 @@ On Linux/WSL, Helm can be installed as a snap package
 ```
 sudo snap install helm --classic
 ```
-On maxOS, it is available through Homebrew
+On macOS, it is available through Homebrew
 ```
 brew install helm
 ``` 
@@ -111,13 +111,15 @@ syntax for the install/upgrade command:
 helm upgrade mocktail hhaluk/mocktail --set replicaCount=3 -n mocktail
 ```
 For larger number of changes, you can write a `custom-values.yaml`
-file and apply them with. We have provided a file at helm/custom-values.yaml
+file and apply them with helm. We have provided a file at helm/custom-values.yaml
 for updating the existing helm release with an ingress. 
 ```
 helm upgrade -i my-mocktail hhaluk/mocktail -n my-mocktail --create-namespace -f helm/custom-values.yaml
 ```
 The above command can be used for a first time install of a helm release or to
 upgrade an existing release due to the `-i` flag.
+
+This upgrade has changed the container port that the service listens on.
 
 There are a large number of 
 community charts covering thousands of 
