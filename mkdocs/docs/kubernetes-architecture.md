@@ -8,7 +8,9 @@ Kubernetes is a powerful container orchestration platform that automates deploym
 
 ---
 
-## Control Plane
+## Nodes
+
+### Control plane
 
 The **Control Plane** is the brain of the Kubernetes cluster. It manages the cluster's state and makes decisions about scheduling, scaling, and responding to events. The Control Plane has individual components running as pods on the node, each responsible for various tasks. 
 
@@ -21,9 +23,7 @@ The **Control Plane** is the brain of the Kubernetes cluster. It manages the clu
 
 - etcd - A distributed key-value store that holds all cluster data (state, configuration, etc.). `etcd-<node-name>`
 
----
-
-## Worker Nodes
+### Worker Nodes
 
 Worker nodes are where your application containers actually run. Each node has the following components:
 
@@ -35,14 +35,49 @@ Worker nodes are where your application containers actually run. Each node has t
 - Kube-proxy - Handles network routing and load balancing for services within the cluster.
 
 ---
+## Basic resources
 
-## How do these components work together?
+### Containers: The Building Blocks
 
-1. You submit a deployment via `kubectl`.
+A container is a lightweight, standalone, executable package that includes everything needed to run a piece of software: code, runtime, libraries, and system tools.
+
+Why Containers?
+
+- **Portability**: Runs the same across environments.
+- **Isolation**: Each container runs independently.
+- **Efficiency**: Uses fewer resources than virtual machines.
+
+### Pods: The Smallest Deployable Unit in Kubernetes
+
+A pod is a group of one or more containers that share storage, network, and a specification for how to run the containers.
+
+**Key Characteristics**:
+
+- Containers in a pod share the same IP address and port space.
+- Pods are ephemeral—if a pod dies, Kubernetes can replace it.
+- Typically, a pod contains a single container, but can include sidecars (e.g., logging or proxy containers).
+
+**Analogy**: Think of a pod as a wrapper around containers that Kubernetes can manage.
+
+
+### Deployments: Managing Application Lifecycle
+
+A deployment is a Kubernetes object that manages a set of pods and ensures the desired number of replicas are running at all times.
+
+**Features**:
+
+- **Declarative updates**: You define the desired state, and Kubernetes makes it happen.
+- **Rollouts and rollbacks**: Easily update your application or revert to a previous version.
+
+
+## How could these components work together?
+
+1. You submit a **deployment** manifest via `kubectl apply -f`.
 2. The **API Server** receives the request.
 3. The **Scheduler** picks a suitable node.
 4. The **Controller Manager** ensures the desired state is maintained.
-5. The **Kubelet** on the chosen node pulls the container image and starts the pod.
+5. The **Kubelet** on the chosen node pulls the container image and starts the **pod**.
+6. The pod creates the relevant **containers** as the manifest describes
 6. **Kube-proxy** ensures networking is set up so the pod can communicate.
 
 ---
@@ -78,25 +113,10 @@ Minikube supports many standard Kubernetes features as well as third-party exten
 - Understanding these components helps you debug, optimize, and scale your applications effectively.
 
 ## Kubernetes Architecture Overview
-```
-Cluster
-├── Control Plane
-│   ├── API Server (kube-apiserver)
-│   ├── Scheduler (kube-scheduler)
-│   ├── Controller Manager (kube-controller-manager)
-│   └── etcd (Key-Value Store)
-│
-└── Worker Nodes
-    ├── Node 1
-    │   ├── Kubelet
-    │   ├── Container Runtime (e.g., containerd)
-    │   └── Kube-proxy
-    │
-    └── Node N
-        ├── Kubelet
-        ├── Container Runtime
-        └── Kube-proxy
-```
+
+![The components of a Kubernetes Cluster](img/kubernetes-overview.svg)
+
+*The components of a Kubernetes cluster. [Overview Components](https://kubernetes.io/docs/concepts/overview/components/)*
 
 ## 📚 Further Reading
 
