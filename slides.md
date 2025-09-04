@@ -64,7 +64,7 @@ Click on Namespaces in the sidebar of the minikube dashboard
 
 - In this workshop, we will work in the *default* namespace
 - In the real-world, you may want to use
-namespaces to divide resourcess (e.g.,`dev`, `prod`)
+namespaces to divide resources (e.g.,`dev`, `prod`)
 
 ---
 # Lesson 0: Minikube Dashboard
@@ -87,7 +87,7 @@ minikube status
 ```
 ---
 # Lesson 1: Kubechaos
-Using minikube's build tool create a Docker image (defined in `image/Dockerfile`) for the Kubechaos app:
+Using Minikube's build tool create a Docker image (defined in `image/Dockerfile`) for the Kubechaos app:
 ```
 minikube image build -t local/kubechaos:v1 image
 ```
@@ -121,7 +121,7 @@ minikube service kubechaos-svc
 ---
 # Lesson 1: Kubechaos
 ## Pods
-List  the running pods (or in Minikube Dashboard under `Workloads > Pods`):
+List the running pods (or in Minikube Dashboard under `Workloads > Pods`):
 ```
 kubectl get pods
 ```
@@ -139,7 +139,7 @@ To view the pod logs:
 ```
 kubectl logs kubechaos-<id>
 ```
-replace `<id>` with the unique identifier that was shown under `NAME` when you ran the `get pods` command.
+Replace `<id>` with the unique identifier that was shown under `NAME` when you ran the `get pods` command.
 You will see a record of the node.js app starting inside the container:
 ```
 > kubechaos@1.0.0 start
@@ -169,7 +169,7 @@ A *Deployment* is a Kubernetes resource that manages the desired state of an app
  **Declarative approach**
   Declare the target state **&rarr;** Kubernetes figures out how to attain and then maintain.
 
- Therefore when you delete a pod a new one will be created in its place to maintain the state.
+ Therefore, when you delete a pod a new one will be created in its place to maintain the state.
 
  ---
 # Lesson 1: Kubechaos
@@ -186,7 +186,7 @@ actual App instances.
 
 ---
 # Lesson 1: Kubechaos
-Let's take a look at the  Deployment section of `deployments/manifest.yaml` here we can see the definition of te Replica Set.
+Let's take a look at the Deployment section of `deployments/manifest.yaml` here we can see the definition of the Replica Set.
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -204,7 +204,7 @@ spec:
 ````
 ---
 # Lesson 1: Kubechaos
-then we have description of the application container that will be runningin in the pod
+then we have description of the application container that will be running in the pod
 ```
     spec:
       containers:
@@ -241,7 +241,7 @@ or by reviewing the Deployments/Pods page in the Web Dashboard.
 # Lesson 1: Kubechaos
 ## Summary
 * Deployed a web application on Kubernetes
-* Deleted a pod and watched it self heal
+* Deleted a pod and watched it self-heal
 * Learnt Kubernetes concepts of Pods, Deployments and Replica Sets.
 * Scaled the deployment to 3 replica sets
 
@@ -275,7 +275,7 @@ Your tasks:
 3. Finally, locate the "KubeChaos @ RSECon25!" title and replace it with "<your-name\> @ RSECon25!"
 
 
-> ⚠️  JavaScript Array Syntax:
+> ⚠️ JavaScript Array Syntax:
 >
 > - Each element is wrapped in backticks `\` (multi-line strings)
 > - Elements are separated by commas
@@ -290,7 +290,7 @@ Verify your new image was created:
 ```
 minikube image ls
 ```
-You should see  both `local/kubechaos:v1` and `local/kubechaos:v2` listed.
+You should see both `local/kubechaos:v1` and `local/kubechaos:v2` listed.
 
 ---
 # Lesson 2: Updating the Kubechaos App
@@ -321,7 +321,7 @@ Return to the browser window/URL with the running application - on refresh you s
 ## Summary
 * Updated the container image
 * Redeployed the application with a single command
-* No need to restart or rebuild systems for a redeploy
+* No need to restart or rebuild systems for a re-deploy
 
 ---
 # Lesson 3: Updating with ConfigMaps
@@ -341,9 +341,9 @@ Pods can use the information in ConfigMaps either as:
 # Lesson 3: Updating with ConfigMaps
 ## Configuring the Style with Environmental variables
 
-In web applications the style is often configured idependently of the application code.
+In web applications the style is often configured independently of the application code.
 
-We currently have a configMap running in our cluster. View it either through the minikube dashboard or with:
+We currently have a ConfigMap running in our cluster. View it either through the Minikube dashboard or with:
 
 ```
 kubectl describe configmap kubechaos-style
@@ -411,8 +411,8 @@ Change the following variables:
   border_style: dashed
 
 ```
-> ⚠️  Note you will need to use specific variables for colors:
->  - they can be in hex rgb format e.g. #000000 or #0000ff
+> ⚠️ Note you will need to use specific variables for colors:
+>  - they can be in hex-RGB format e.g. #000000 or #0000ff
 >  - or they can be in css names e.g. black or blue
 
 Refresh your web browser. What has happened?
@@ -432,11 +432,11 @@ Refresh your web browser, what do you see now?
 ### Explanation
 
 The variables that you edited in the ConfigMap are applied as **environmental variables**.
- To get the pod to pick up on it's new environment it needs to be remade. The quickest way to restart everything is to use the `kubectl rollout restart` command we used above.
+ To get the pod to pick up on its new environment it needs to be remade. The quickest way to restart everything is to use the `kubectl rollout restart` command we used above.
 
  ---
  # Lesson 3: Updating with ConfigMaps
-We will now look at `manifest.yml`. Please open up this file and scroll to the  block at line 22, to line 44. In this part of the deploymnet we set the `env` section of the container with values from the ConfigMap.
+We will now look at `manifest.yml`. Please open up this file and scroll to the block at line 22, to line 44. In this part of the deployment we set the `env` section of the container with values from the ConfigMap.
 
 ```
     spec:
@@ -465,9 +465,9 @@ Now we will look at mounting our ConfigMap as a volume. This method is used when
 ---
 # Lesson 3: Updating with ConfigMaps
 
-Usually a website's style is configured through a `.css` file, rather than  environmental variables.
+Usually a website's style is configured through a `.css` file, rather than environmental variables.
 
-Look ConfigMap either through the Minikube Dashboard or with:
+Look  at the ConfigMap either through the Minikube Dashboard or with:
 `kubectl describe configmap style-kubechaos`
 There is a definition of a css file :
 
@@ -488,14 +488,14 @@ kubectl edit configmap style-kubechoas
 Refresh your browser? What happens now?
 > ⚠️  Note you will need to use specific variables for `font-family and `text-align`:
 >  - `text-align` can be `center`, `right`, `left`
->  - `font-family` has to belong to the websafe fonts e.g. `serif`, `arial`, `garamond`
+>  - `font-family` has to belong to the web-safe fonts e.g. `serif`, `arial`, `garamond`
 
 ---
 # Lesson 3: Updating with ConfigMaps
 
 ## Explanation
 
-Here we are mounting a file as a volume into the pod. The file is being written by the values in the in the ConfigMap. When we change the values they are immediately picked up by the pod without it being restarted.
+Here we are mounting a file as a volume into the pod. The file is being written by the values in the ConfigMap. When we change the values they are immediately picked up by the pod without it being restarted.
 
 ---
 # Lesson 3: Updating with ConfigMaps
@@ -517,11 +517,11 @@ Open the `manifest.yml` and scroll to line 44 to 54:
               path: "style.css"
 ```
 
-This creates a volume called `style-env` and  mounts it as a volume. This volume has  the `style.css` file  mounted on the path the application expects.
+This creates a volume called `style-env` and mounts it as a volume. This volume has the `style.css` file mounted on the path the application expects.
 
 ---
 # Lesson 3: Updating with ConfigMaps
-To see the mainfest of the original ConfigMap (before our edits) you can scroll down to line 73 in `manifests.yml`:
+To see the manifest of the original ConfigMap (before our edits) you can scroll down to line 73 in `manifests.yml`:
 
 ```
 apiVersion: v1
@@ -562,7 +562,7 @@ a Helm chart to our minikube cluster.
 ---
 # Lesson 4: Helm
 
-> ⚠️  Security
+> ⚠️ Security
 >
 > Like all code on the internet, Helm charts can contain malicious content.
 > Only install Helm charts from trusted sources. Vetting charts using Helm's
@@ -591,10 +591,10 @@ You can verify your installation by running `helm version`.
 # Lesson 4: Helm
 
 ## 🍹 Deploying Mocktail with Helm
-Moktail, https://github.com/Huseyinnurbaki/mocktail, is a minimalist
+Mocktail, https://github.com/Huseyinnurbaki/mocktail, is a minimalist
 server that allows you to define and test custom API endpoints.
 
-We'll use it to demonstrate deploying a collection of kubernetes
+We'll use it to demonstrate deploying a collection of Kubernetes
 manifests to our cluster using a Helm chart.
 
 Helm Charts can be found in two main ways:
@@ -621,7 +621,7 @@ repositories:
 # Lesson 4: Helm
 ### Deploying Mocktail
 Having added the Mocktail helm repository, the application can be
-deployed to our minikube cluster with
+deployed to our Minikube cluster with
 ```
 helm install mocktail hhaluk/mocktail -n mocktail --create-namespace
 ```
@@ -640,7 +640,7 @@ minikube service mocktail-svc --url -n mocktail
 ```
 The URL should take you to the Mocktail dashboard.
 
->**Extra** You can also use your minikube dashboard or the `kubectl` commands you have learned to explore the pods and deployments associated with >Mocktail.
+>**Extra** You can also use your Minikube dashboard or the `kubectl` commands you have learned to explore the pods and deployments associated with >Mocktail.
 
 ---
 # Lesson 4: Helm
@@ -686,8 +686,7 @@ This upgrade has changed the container port that the service listens on.
 
 ---
 # Lesson 4: Helm
-There are a large number of community charts covering thousands of
-web and infrastructure projects.
+There are numerous community charts covering thousands of web and infrastructure projects.
 Charts on Artifact Hub https://artifacthub.io/ may be searched directly from the command line with:
 ```
 helm search hub <search-term>
@@ -707,7 +706,7 @@ helm search repo <search-term>
 ---
 # Lesson 4: Helm
 ### Cleaning up
-We can clean up everything we deployed during this lession using:
+We can clean up everything we deployed during this lesson using:
 ```
 helm uninstall mocktail -n mocktail
 helm uninstall my-mocktail -n my-mocktail
