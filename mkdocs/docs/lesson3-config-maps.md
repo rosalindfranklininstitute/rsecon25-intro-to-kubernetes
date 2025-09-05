@@ -9,7 +9,7 @@ Pods can use the information in ConfigMaps either as environmental variables or 
 
 ## Configuring the Style with Environmental variables
 
-In web applications the style is often configured idependently of the application code. Kubernetes offers an easy and useful way to update pods from ConfigMaps without having to redeploy anything or rebuild the container.
+In web applications the style is often configured independently of the application code. Kubernetes offers an easy and useful way to update pods from ConfigMaps without having to redeploy anything or rebuild the container.
 
 We currently have a configMap running in our cluster. You can view it either through the minikube dashboard by clicking on ConfigMap in the side bar, or by running
 
