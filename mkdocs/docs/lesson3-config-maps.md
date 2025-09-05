@@ -50,6 +50,7 @@ Refresh your web browser, what do you see now?
 The variables that you edited in the ConfigMap are applied as environmental variables. To get the pod to pick up on it's new environment it needs to be remade. The quickest way to restart everything is to use the `kubectl rollout restart` command we used above.
 
 We will now look at `manifest.yml`. Please open up this file and scroll to the  block at line 22, to line 44. In this part of the deploymnet we set the `env` section of the container with values from the ConfigMap.
+We will now look at `manifest.yml`. Please open up this file and scroll to the  block at line 22, to line 44. In this part of the deploymnet we set the `env` section of the container with values from the ConfigMap.
 
 ```
     spec:
@@ -84,6 +85,7 @@ We will now look at `manifest.yml`. Please open up this file and scroll to the  
 
 *Extra*
 In `manifests.yaml` can you add the value of `border_style` to the enviromental variable `BORDER_STYLE` to change the border style, through the ConfigMap?
+In `manifests.yaml` can you add the value of `border_style` to the enviromental variable `BORDER_STYLE` to change the border style, through the ConfigMap?
 
 In this section we injected variables from the ConfigMap into the pod as environmental variables to make changes without having to rebuild the image. This use case is ideal for applications that read configuration through environment variables. This method is straightforward and doesn't require file handling. You have to restart the container in order for any ConfigMap changes to take effect.
 
@@ -93,6 +95,7 @@ In the next section we will look at mounting our configMap to the container as a
 
 Usually a website's style is configured through a stylesheet provided as a `.css` file, rather than with environmental variables. In this section we are going to look at another way to use ConfigMaps, mounting them as volumes into the pod.
 
+If you look at the ConfigMap we have deployed on our cluster either through the Minikube Dashboard or by running `kubectl describe configmap style-kubechaos` you will see that there is a definition of a css file in the ConfigMap:
 If you look at the ConfigMap we have deployed on our cluster either through the Minikube Dashboard or by running `kubectl describe configmap style-kubechaos` you will see that there is a definition of a css file in the ConfigMap:
 
 ```
@@ -117,6 +120,7 @@ Refresh your browser? What happens now? You will see the changes you made will b
 ### Explanation
 
 Here we are mounting a file as a volume into the pod. The file is being written by the values in the in the ConfigMap. When we change the values they are immediately picked up by the pod without it being restarted. If you open the `manifest.yml` and scroll to line 44 to 54 you will see:
+Here we are mounting a file as a volume into the pod. The file is being written by the values in the in the ConfigMap. When we change the values they are immediately picked up by the pod without it being restarted. If you open the `manifest.yml` and scroll to line 44 to 54 you will see:
 
 ```   container:
             ...
@@ -133,6 +137,7 @@ Here we are mounting a file as a volume into the pod. The file is being written 
               path: "style.css"
 ```
 
+This section of the deployment creates a volume called `style-env` and then mounts it as a volume in the container. This volume contains the `style.css` file and is mounted on the path the application expects.
 This section of the deployment creates a volume called `style-env` and then mounts it as a volume in the container. This volume contains the `style.css` file and is mounted on the path the application expects.
 
 To see the mainfest of the original ConfigMap (before our edits) you can scroll down to line 73 in `manifests.yml`:

@@ -77,6 +77,7 @@ on refresh you should now see your own jokes and custom title!
 > URL from `minikube service kubechaos-svc --url` as before.
 
 ## 📚 Further Reading
+
 - [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
   in the official Kubernetes documentation
 - [42 Kubernetes
