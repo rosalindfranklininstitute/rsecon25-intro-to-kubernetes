@@ -29,7 +29,7 @@ Kubernetes keeps the internal container network separate from external access. T
 ---
 # Lesson 3: Updating with ConfigMaps
 ## Extra
-In `manifests.yaml` can you add the value of `border_style` to the enviromental variable `BORDER_STYLE` to change the border style, through the Config Map?
+In `manifests.yaml` can you add the value of `border_style` to the environmental variable `BORDER_STYLE` to change the border style, through the ConfigMap?
 
 ---
 # Lesson 3: Updating with ConfigMaps
