@@ -79,7 +79,7 @@ We will now look at `manifest.yml`. Please open up this file and scroll to the  
             configMapKeyRef:
               name: kubechaos-style
               key: border_size
-        # can you edit this to add the BORDER_STYLE  env variable from the CSonfigMap
+        # can you edit this to add the BORDER_STYLE  env variable from the ConfigMap
 ```
 
 *Extra*
