@@ -49,7 +49,7 @@ The Kubernetes architecture is divided into two main parts:
 ---
 
 # Kubernetes Architecture - Control Plane
-<!-- 
+<!--
 The **Control Plane** is the brain of the Kubernetes cluster. It manages the cluster's state and makes decisions about scheduling, scaling, and responding to events. The Control Plane has individual components running as pods on the node, each responsible for various tasks.
 -->
 
@@ -58,7 +58,7 @@ Key Components:
 
 - Controller Manager - Runs `controllers` that handle routine tasks like node health checks, replication, and endpoint management.
 
-- Scheduler - Assigns newly created pods to nodes based on resource availability and constraints. 
+- Scheduler - Assigns newly created pods to nodes based on resource availability and constraints.
 
 - etcd - A distributed key-value store that holds all cluster data.
 
@@ -142,7 +142,7 @@ Minikube supports many standard Kubernetes features as well as third-party exten
 ---
 # Lesson 0: Minikube Dashboard
 
-In this lesson we will create a cluster, if you have not already, and deploy the Kubernetes dashboard with minikube. 
+In this lesson we will create a cluster, if you have not already, and deploy the Kubernetes dashboard with minikube.
 
 ---
 # Lesson 0: Minikube Dashboard
@@ -831,3 +831,25 @@ helm list -n my-mocktail
 * Configuring the Helm chart through adding `custom-values`
 * How to explore repos and Artifact Hub
 * Cleaning up the application
+
+---
+
+# Using Kubernetes in your work
+
+Everything you have learned today can be used in your own work. For further reading on the requirements to scale to production please see:
+
+<img src='slide-assets/qr.png' width=200px class=centered-image></img>
+*https://rosalindfranklininstitute.github.io/rsecon25-intro-to-kubernetes/*
+
+
+---
+# Cloud-Native SIG
+Was brought to you with support for the **Software Sustainability Institute**
+**Join us:**
+- ✉️ cloudnative-sig@jiscmail.ac.uk
+- 🌐 cloudnative-sig.ac.uk
+
+<img src='slide-assets/SSI-LOGO.png' style="padding-top:100px" ></img>
+
+---
+# Thanks for your participation
