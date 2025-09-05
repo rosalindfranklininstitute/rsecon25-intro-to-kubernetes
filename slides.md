@@ -24,7 +24,10 @@ h1 {color: teal}
 # Deploying a Web Application with Kubernetes
 ## A Cloud Native SIG Workshop
 ### RSECon25 Thursday 11th September
-Authors: Laura Shemilt, Lewis Sampson, Piper Fowler-Wright and Alex Lubbock
+Authors: Laura Shemilt <sup>1</sup> , Lewis Sampson <sup>2</sup> , Piper Fowler-Wright<sup>1</sup> and Alex Lubbock<sup>1</sup>
+
+<sup>1</sup> *The Rosalind Franklin Institute*
+<sup>2</sup> *Science and Techonology Facilities Council, Scientific Computing Division - DAFNI*
 
 
 ---
