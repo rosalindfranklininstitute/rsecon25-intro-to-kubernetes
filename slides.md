@@ -856,3 +856,25 @@ helm list -n my-mocktail
 * Configuring the Helm chart through adding `custom-values`
 * How to explore repos and Artifact Hub
 * Cleaning up the application
+
+---
+
+# Using Kubernetes in your work
+
+Everything you have learned today can be used in your own work. For further reading on the requirements to scale to production please see:
+
+<img src='slide-assets/qr.png' width=200px class=centered-image></img>
+*https://rosalindfranklininstitute.github.io/rsecon25-intro-to-kubernetes/*
+
+
+---
+# Cloud-Native SIG
+Was brought to you with support for the **Software Sustainability Institute**
+**Join us:**
+- ✉️ cloudnative-sig@jiscmail.ac.uk
+- 🌐 cloudnative-sig.ac.uk
+
+<img src='slide-assets/SSI-LOGO.png' style="padding-top:100px" ></img>
+
+---
+# Thanks for your participation
