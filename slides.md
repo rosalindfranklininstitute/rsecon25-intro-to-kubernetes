@@ -330,7 +330,7 @@ spec:
 ````
 ---
 # Lesson 1: Kubechaos
-then we have description of the application container that will be running in the pod
+Further down we can see a description of the application container that will be running in the pod
 ```
     spec:
       containers:
