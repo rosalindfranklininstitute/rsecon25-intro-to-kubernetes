@@ -356,8 +356,7 @@ What do you see?
 
 ---
 # Lesson 1: Kubechaos
-In the first terminal you will see in two additional replicas being spun up
-immediately!
+In the first terminal you will see in two additional replicas being spun up immediately!
 
 You can verify the new state with
 ```kubectl get deployment```
@@ -593,7 +592,7 @@ Now we will look at mounting our ConfigMap as a volume. This method is used when
 
 Usually a website's style is configured through a `.css` file, rather than environmental variables.
 
-Look  at the ConfigMap either through the Minikube Dashboard or with:
+Look at the ConfigMap either through the Minikube Dashboard or with:
 `kubectl describe configmap style-kubechaos`
 There is a definition of a css file :
 
@@ -681,9 +680,7 @@ Helm is a package manager for Kubernetes that provides a convenient way to share
 
 By packaging manifests into reusable 'Charts', complex projects can be installed with a single command, including any dependencies.
 
-
-In this lesson, we'll deploy a community application available as
-a Helm chart to our minikube cluster.
+In this lesson, we'll deploy a community application available as a Helm chart to our minikube cluster.
 
 ---
 # Lesson 4: Helm
@@ -710,18 +707,15 @@ Other Windows users can use the Chocolately package manager:
 ```
 choco install kubernetes-helm
 ```
-
 You can verify your installation by running `helm version`.
 
 ---
 # Lesson 4: Helm
 
 ## 🍹 Deploying Mocktail with Helm
-Mocktail, https://github.com/Huseyinnurbaki/mocktail, is a minimalist
-server that allows you to define and test custom API endpoints.
+Mocktail, https://github.com/Huseyinnurbaki/mocktail, is a minimalist server that allows you to define and test custom API endpoints.
 
-We'll use it to demonstrate deploying a collection of Kubernetes
-manifests to our cluster using a Helm chart.
+We'll use it to demonstrate deploying a collection of Kubernetes manifests to our cluster using a Helm chart.
 
 Helm Charts can be found in two main ways:
 
@@ -731,14 +725,12 @@ Helm Charts can be found in two main ways:
 ---
 # Lesson 4: Helm
 
-Mocktail provides its own Helm repository, which we can add to
-Helm with
+Mocktail provides its own Helm repository, which we can add to Helm with
 ```
 helm repo add hhaluk https://huseyinnurbaki.github.io/charts/
 
 ```
-> 💡 **Tip** It's a good idea to periodically get Helm to check for updates from added
-repositories:
+> 💡 **Tip** It's a good idea to periodically get Helm to check for updates from added repositories:
 > ```
 > helm repo update
 > ```
@@ -805,8 +797,7 @@ We have provided a file at helm/custom-values.yaml for updating the existing hel
 ```
 helm upgrade -i my-mocktail hhaluk/mocktail -n my-mocktail --create-namespace -f helm/custom-values.yaml
 ```
-The above command can be used for a first time install of a helm release or to
-upgrade an existing release due to the `-i` flag.
+The above command can be used for a first time install of a helm release or to upgrade an existing release due to the `-i` flag.
 
 This upgrade has changed the container port that the service listens on.
 
@@ -837,7 +828,7 @@ We can clean up everything we deployed during this lesson using:
 helm uninstall mocktail -n mocktail
 helm uninstall my-mocktail -n my-mocktail
 ```
-You can check that the resources have been removed by using `kubectl` :
+You can check that the resources have been removed by using `kubectl` or `helm`:
 ```
 helm list -n mocktail
 helm list -n my-mocktail
