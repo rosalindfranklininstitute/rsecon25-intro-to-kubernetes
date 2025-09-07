@@ -32,48 +32,41 @@ Authors: Laura Shemilt <sup>1</sup> , Lewis Sampson <sup>2</sup> , Piper Fowler-
 
 ---
 # Why Kubernetes?
-- Scalability and High Availability
-- Self-Healing and Reliability
-- Declarative Configuration and Rolling Updates
-- Resource Management
-- Networking
-- Security
-- Extensibility and Ecosystem
-- Stateful Applications
-- Backup and Restore
+
+Kubernetes is a powerful container orchestration platform that automates deployment, scaling, and management of containerized applications. There are other benefits that Kubernetes generally offers.
+
+- High availability, self-healing, and rolling updates.
+- Declarative configuration and resource management including networking, and security
+- Stateful applications with backups and restoration.
+
 ---
+
 # Kubernetes Architecture
 ## Overview
-Kubernetes is a powerful container orchestration platform that automates deployment, scaling, and management of containerized applications. Its architecture is divided into two main parts:
+ A kubernetes cluster is built up of nodes representing the machines and compute resources. The architecture is then divided into two main parts:
 
-- Control Plane
-- Worker Nodes
----
-# Kubernetes Architecture
-## Nodes
-
-### Control plane
-
-The **Control Plane** is the brain of the Kubernetes cluster. It manages the cluster's state and makes decisions about scheduling, scaling, and responding to events. The Control Plane has individual components running as pods on the node, each responsible for various tasks.
-
-
-### Worker Nodes
-
-Worker nodes are where your application containers actually run.
-
+- Control Plane nodes 
+- Worker nodes
 
 ---
+
 # Kubernetes Architecture
+The **Control Plane** is the brain of the Kubernetes cluster. It manages the cluster's state and makes decisions about scheduling, scaling, and responding to events. The Control Plane has individual components running as pods on the node.
+
 #### Control Node Key Components:
-- API Server - The front-end for the Kubernetes control plane. All interactions go through this RESTful API. `kube-apiserver-<node-name>`
+- API Server - The front-end for the Kubernetes control plane.
 
-- Controller Manager - Runs controllers that handle routine tasks like node health checks, replication, and endpoint management. `kube-controller-manager-<node-name>`
+- Controller Manager - Runs controllers that handle routine tasks like node health checks, and endpoint management.
 
-- Scheduler - Assigns newly created pods to nodes based on resource availability and constraints. `kube-scheduler-<node-name>`
+- Scheduler - Assigns newly created pods to nodes based on resource availability and constraints. 
 
-- etcd - A distributed key-value store that holds all cluster data (state, configuration, etc.). `etcd-<node-name>`
+- etcd - A distributed key-value store that holds all cluster data. 
+
 ---
 # Kubernetes Architecture
+
+**Worker nodes** are where your application containers actually run.
+
 #### Worker Node Key Components:
 - Kubelet - An agent that runs on each node. It communicates with the API server and ensures containers are running as expected.
 
@@ -179,6 +172,10 @@ minikube start
 Then, launch the dashboard with
 ```bash
 minikube dashboard
+```
+or to get it to provide a url and run in the backgroud 
+```bash
+minikube dashboard --url &
 ```
 ---
 # Lesson 0: Minikube Dashboard
