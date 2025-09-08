@@ -76,7 +76,7 @@ The **Control Plane** is the brain of the Kubernetes cluster. It manages the clu
 
 ---
 # Kubernetes Architecture
-<img src='mkdocs/docs/img/kubernetes-overview.svg' width=1000px></img>
+<img src='mkdocs/docs/images/kubernetes-overview.svg' width=1000px></img>
 <span style='font-size:18'>https://kubernetes.io/docs/concepts/overview/components/</span>
 
 ---
