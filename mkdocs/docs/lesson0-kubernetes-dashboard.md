@@ -30,7 +30,7 @@ The dashboard is organised into several sections.
 We'll focus on the parts immediately relevant for getting started:
 Workloads, Cluster Nodes and Namespaces.
 In subsequent lessons, we will also introduce ingress, storage volumes
-and config maps found under the Service and Config and Storage sections.
+and config maps.
 
 ### Workloads
 Workloads shows the applications running in your cluster, including
