@@ -30,7 +30,7 @@ The dashboard is organised into several sections.
 We'll focus on the parts immediately relevant for getting started:
 Workloads, Cluster Nodes and Namespaces.
 In subsequent lessons, we will also introduce ingress, storage volumes
-and config maps found under the Service and Config and Storage sections.
+and config maps.
 
 ### Workloads
 Workloads shows the applications running in your cluster, including
@@ -70,7 +70,7 @@ namespaces to divide resources between projects, teams or environments (e.g.,
 ## 💡 Tips
 - Keep the dashboard open to see the effect of `kubectl` commands in real-time
 - <span style="color: green;">Green</span> typically mean healthy/running,
-  <span style="color: green;">yellow</span>  pending/updating, and
+  <span style="color: gold;">yellow</span>  pending/updating, and
    <span style="color: red;">red</span> an  error state
 - Click on any resource name to get detailed information and logs
 

@@ -114,7 +114,7 @@ Minikube supports many standard Kubernetes features as well as third-party exten
 
 ## Kubernetes Architecture Overview
 
-![The components of a Kubernetes Cluster](img/kubernetes-overview.svg)
+![The components of a Kubernetes Cluster](images/kubernetes-overview.svg)
 
 *The components of a Kubernetes cluster. [Overview Components](https://kubernetes.io/docs/concepts/overview/components/)*
 
