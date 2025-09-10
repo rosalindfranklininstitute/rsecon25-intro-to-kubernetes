@@ -1,5 +1,7 @@
 # 📖 README — KubeChaos @ RSECon25
 
+GitHub Pages - https://rosalindfranklininstitute.github.io/rsecon25-intro-to-kubernetes/
+
 ## 🎯 About
 
 KubeChaos is a tiny Node.js single-page app that serves a **random surprise** every time you refresh — random facts, Kubernetes "jokes" (from ChatGPT!) and mini-games.
