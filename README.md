@@ -6,7 +6,8 @@ KubeChaos is a tiny Node.js single-page app that serves a **random surprise** ev
 
 It’s perfect for testing Kubernetes basics on **Minikube** or running locally in Docker/Podman.
 
-If you are attending the workshop at RSECon25 please make sure you follow the installs for Prerequisites and Install Links by OS. The rest of the README will be followed during the tutorial.
+> If you are attending the workshop at RSECon25 please make sure you follow the installs for Prerequisites and Install Links by OS. The rest of the README will be followed during  the tutorial.
+> Full documentation can be found here: https://rosalindfranklininstitute.github.io/rsecon25-intro-to-kubernetes/
 ---
 
 ## 🛠 Prerequisites
