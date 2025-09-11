@@ -6,8 +6,12 @@ cluster at a glance. While the dashboard may be used to directly manage a
 Kubernetes cluster, we will take the more explicit approach to
 management with the Kubernetes CLI, `kubectl`.
 
-> ⚠️ Commands in the lessons should be run in a Linux/WSL/Mac OS terminal, or 
+> ⚠️ Commands in the lessons should be run in a Linux/WSL/Mac OS terminal, or
 > a Windows equivalent (Command Prompt or Power shell)
+>
+> You can set an alias for `kubectl` by adding it to your `~/.bash_aliases` or `~/.zshrc`
+>
+>     alias kubectl="minikube kubectl --"
 
 ## Dashboard Access
 minikube has built-in support for the Kubernetes Dashboard. First, start a
@@ -20,7 +24,7 @@ Then, launch the dashboard with
 minikube dashboard
 ```
 This should open the web UI in a browser window. Alternatively, run `minikube
-dashobard --url` and copy the URL. 
+dashobard --url` and copy the URL.
 
 > ⚠️  You will need to leave the terminal process open (or fork the command into
 > the background) to maintain access to the dashboard.
@@ -58,7 +62,7 @@ such as storage provision and network routing&mdash;plus a pod for the dashboard
 The dropdown menu next to the search bar at the top of the dashboard
 allows you to filter by **namespace**. Namespaces are a fundamental
 Kubernetes concept. They provide a way to organise and isolate resources within
-a cluster. 
+a cluster.
 
 In this workshop, we will work in the *default* namespace, which is
 created automatically. In the real-world, you may want to use
