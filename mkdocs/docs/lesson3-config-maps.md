@@ -109,7 +109,7 @@ Now let's edit these variables in the ConfigMap keeping the structure of the fil
 >  - `text-align` can be `center`, `right`, `left`
 >  - `font-family` has to belong to the websafe fonts e.g. `serif`, `arial`, `garamond`
 ```
-kubectl edit configmap style-kubechoas
+kubectl edit configmap style-kubechaos
 ```
 
 Refresh your browser? What happens now? You will see the changes you made will be applied immediately on refresh without restarting the deployment.

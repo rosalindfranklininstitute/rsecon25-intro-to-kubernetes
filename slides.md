@@ -608,7 +608,7 @@ body { font-family: 'sans-serif';
 # Lesson 3: Updating with ConfigMaps
 Now let's edit these variables in the ConfigMap keeping the structure of the file intact:
 ```
-kubectl edit configmap style-kubechoas
+kubectl edit configmap style-kubechaos
 ```
 Refresh your browser? What happens now?
 > ⚠️  Note you will need to use specific variables for `font-family and `text-align`:
