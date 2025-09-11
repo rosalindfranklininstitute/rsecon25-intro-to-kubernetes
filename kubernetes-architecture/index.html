@@ -1,0 +1,1204 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../why-kubernetes/">
+      
+      
+        <link rel="next" href="../lesson0-kubernetes-dashboard/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
+    
+    
+      
+        <title>Introduction to Kubernetes Architecture - RSECon25 Workshop- Deploying a Web Application with Kubernetes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction-to-kubernetes-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="RSECon25 Workshop- Deploying a Web Application with Kubernetes" class="md-header__button md-logo" aria-label="RSECon25 Workshop- Deploying a Web Application with Kubernetes" data-md-component="logo">
+      
+  <img src="../assets/CN-SIG-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RSECon25 Workshop- Deploying a Web Application with Kubernetes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction to Kubernetes Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rosalindfranklininstitute/rsecon25-intro-to-kubernetes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="RSECon25 Workshop- Deploying a Web Application with Kubernetes" class="md-nav__button md-logo" aria-label="RSECon25 Workshop- Deploying a Web Application with Kubernetes" data-md-component="logo">
+      
+  <img src="../assets/CN-SIG-logo.png" alt="logo">
+
+    </a>
+    RSECon25 Workshop- Deploying a Web Application with Kubernetes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rosalindfranklininstitute/rsecon25-intro-to-kubernetes" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deploying a Webservice with Kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Introduction
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Why kubernetes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Introduction to Kubernetes Architecture
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction to Kubernetes Architecture
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-plane" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control plane
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Control plane">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Components:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worker Nodes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worker Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Components:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic resources
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#containers-the-building-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Containers: The Building Blocks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pods-the-smallest-deployable-unit-in-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pods: The Smallest Deployable Unit in Kubernetes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployments-managing-application-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployments: Managing Application Lifecycle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-could-these-components-work-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      How could these components work together?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minikube-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minikube Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minikube Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-standard-kubernetes-architecture-maps-to-minikube" class="md-nav__link">
+    <span class="md-ellipsis">
+      How standard Kubernetes architecture maps to Minikube:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Differences:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes Architecture Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Lessons
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Lessons
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson0-kubernetes-dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lesson 0: Kubernetes Dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson1-kubechaos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lesson 1: Your First Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson2-kubechaos-update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lesson 2: Updating the Kubechaos App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Lessons 2 extension task
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Lessons 2 extension task
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson2-kubechaos-extra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Multiple Deployments
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson3-config-maps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lesson 3: Updating with ConfigMaps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson4-helm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lesson 4: Helm Charts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-plane" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control plane
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Control plane">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Components:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worker Nodes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worker Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-components_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Components:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic resources
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#containers-the-building-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Containers: The Building Blocks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pods-the-smallest-deployable-unit-in-kubernetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pods: The Smallest Deployable Unit in Kubernetes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployments-managing-application-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployments: Managing Application Lifecycle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-could-these-components-work-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      How could these components work together?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minikube-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minikube Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minikube Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-standard-kubernetes-architecture-maps-to-minikube" class="md-nav__link">
+    <span class="md-ellipsis">
+      How standard Kubernetes architecture maps to Minikube:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Differences:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kubernetes Architecture Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="introduction-to-kubernetes-architecture">Introduction to Kubernetes Architecture</h1>
+<h2 id="overview">Overview</h2>
+<p>Kubernetes is a powerful container orchestration platform that automates deployment, scaling, and management of containerized applications. Its architecture is divided into two main parts:</p>
+<ul>
+<li>Control Plane</li>
+<li>Worker Nodes</li>
+</ul>
+<hr />
+<h2 id="nodes">Nodes</h2>
+<h3 id="control-plane">Control plane</h3>
+<p>The <strong>Control Plane</strong> is the brain of the Kubernetes cluster. It manages the cluster's state and makes decisions about scheduling, scaling, and responding to events. The Control Plane has individual components running as pods on the node, each responsible for various tasks. </p>
+<h4 id="key-components">Key Components:</h4>
+<ul>
+<li>
+<p>API Server - Acts as the front-end for the Kubernetes control plane. All interactions (kubectl, dashboard, etc.) go through this RESTful API. <code>kube-apiserver-&lt;node-name&gt;</code></p>
+</li>
+<li>
+<p>Controller Manager - Runs controllers that handle routine tasks like node health checks, replication, and endpoint management. <code>kube-controller-manager-&lt;node-name&gt;</code></p>
+</li>
+<li>
+<p>Scheduler - Assigns newly created pods to nodes based on resource availability and constraints. <code>kube-scheduler-&lt;node-name&gt;</code></p>
+</li>
+<li>
+<p>etcd - A distributed key-value store that holds all cluster data (state, configuration, etc.). <code>etcd-&lt;node-name&gt;</code></p>
+</li>
+</ul>
+<h3 id="worker-nodes">Worker Nodes</h3>
+<p>Worker nodes are where your application containers actually run. Each node has the following components:</p>
+<h4 id="key-components_1">Key Components:</h4>
+<ul>
+<li>
+<p>Kubelet - An agent that runs on each node. It communicates with the API server and ensures containers are running as expected.</p>
+</li>
+<li>
+<p>Container Runtime - Software responsible for running containers (e.g., Docker, containerd).</p>
+</li>
+<li>
+<p>Kube-proxy - Handles network routing and load balancing for services within the cluster.</p>
+</li>
+</ul>
+<hr />
+<h2 id="basic-resources">Basic resources</h2>
+<h3 id="containers-the-building-blocks">Containers: The Building Blocks</h3>
+<p>A container is a lightweight, standalone, executable package that includes everything needed to run a piece of software: code, runtime, libraries, and system tools.</p>
+<p>Why Containers?</p>
+<ul>
+<li><strong>Portability</strong>: Runs the same across environments.</li>
+<li><strong>Isolation</strong>: Each container runs independently.</li>
+<li><strong>Efficiency</strong>: Uses fewer resources than virtual machines.</li>
+</ul>
+<h3 id="pods-the-smallest-deployable-unit-in-kubernetes">Pods: The Smallest Deployable Unit in Kubernetes</h3>
+<p>A pod is a group of one or more containers that share storage, network, and a specification for how to run the containers.</p>
+<p><strong>Key Characteristics</strong>:</p>
+<ul>
+<li>Containers in a pod share the same IP address and port space.</li>
+<li>Pods are ephemeral—if a pod dies, Kubernetes can replace it.</li>
+<li>Typically, a pod contains a single container, but can include sidecars (e.g., logging or proxy containers).</li>
+</ul>
+<p><strong>Analogy</strong>: Think of a pod as a wrapper around containers that Kubernetes can manage.</p>
+<h3 id="deployments-managing-application-lifecycle">Deployments: Managing Application Lifecycle</h3>
+<p>A deployment is a Kubernetes object that manages a set of pods and ensures the desired number of replicas are running at all times.</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li><strong>Declarative updates</strong>: You define the desired state, and Kubernetes makes it happen.</li>
+<li><strong>Rollouts and rollbacks</strong>: Easily update your application or revert to a previous version.</li>
+</ul>
+<h2 id="how-could-these-components-work-together">How could these components work together?</h2>
+<ol>
+<li>You submit a <strong>deployment</strong> manifest via <code>kubectl apply -f</code>.</li>
+<li>The <strong>API Server</strong> receives the request.</li>
+<li>The <strong>Scheduler</strong> picks a suitable node.</li>
+<li>The <strong>Controller Manager</strong> ensures the desired state is maintained.</li>
+<li>The <strong>Kubelet</strong> on the chosen node pulls the container image and starts the <strong>pod</strong>.</li>
+<li>The pod creates the relevant <strong>containers</strong> as the manifest describes</li>
+<li><strong>Kube-proxy</strong> ensures networking is set up so the pod can communicate.</li>
+</ol>
+<hr />
+<h2 id="minikube-architecture">Minikube Architecture</h2>
+<p>During this workshop we will be demonstrating Kubernetes using Minikube to create clusters and deploy resources. Minikube is a tool that lets you run a single-node Kubernetes cluster locally on your machine. It’s designed for developers and learners who want to experiment with Kubernetes without needing a full multi-node setup.</p>
+<h3 id="how-standard-kubernetes-architecture-maps-to-minikube">How standard Kubernetes architecture maps to Minikube:</h3>
+<table>
+<thead>
+<tr>
+<th>Standard Kubernetes</th>
+<th>Minikube</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control Plane</td>
+<td>Runs inside the Minikube VM/container</td>
+</tr>
+<tr>
+<td>Worker Node</td>
+<td>Same VM/container acts as the worker node</td>
+</tr>
+<tr>
+<td>Kubelet</td>
+<td>Runs inside Minikube</td>
+</tr>
+<tr>
+<td>API Server</td>
+<td>Accessible via <code>kubectl</code> on your host</td>
+</tr>
+<tr>
+<td>etcd, Scheduler, Controller Manager</td>
+<td>All run inside the Minikube VM</td>
+</tr>
+</tbody>
+</table>
+<p>Minikube supports many standard Kubernetes features as well as third-party extensions in the form of <a href="https://minikube.sigs.k8s.io/docs/handbook/deploying/#addons">addons</a>.</p>
+<h3 id="key-differences">Key Differences:</h3>
+<ul>
+<li><strong>Single-node setup</strong>: Control plane and worker node are co-located.</li>
+<li><strong>Simplified networking</strong>: Easier to manage locally.</li>
+<li><strong>Ideal for testing</strong>: Lightweight and fast to spin up.</li>
+</ul>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li>Kubernetes separates concerns between managing the cluster (control plane) and running workloads (worker nodes).</li>
+<li>Minikube mimics this architecture in a simplified, single-node environment.</li>
+<li>Understanding these components helps you debug, optimize, and scale your applications effectively.</li>
+</ul>
+<h2 id="kubernetes-architecture-overview">Kubernetes Architecture Overview</h2>
+<p><img alt="The components of a Kubernetes Cluster" src="../images/kubernetes-overview.svg" /></p>
+<p><em>The components of a Kubernetes cluster. <a href="https://kubernetes.io/docs/concepts/overview/components/">Overview Components</a></em></p>
+<h2 id="further-reading">📚 Further Reading</h2>
+<ul>
+<li><a href="https://kubernetes.io/">Kubernetes project website</a></li>
+<li><a href="https://minikube.sigs.k8s.io/docs/">Minikube documentation</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["instant"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+    
+  </body>
+</html>
