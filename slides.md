@@ -279,7 +279,7 @@ Server running at http://localhost:3000
 ## Deletion Experiment
 Let's see what happens if we delete the pod from the cluster:
 ```
-kubectl delete <pod-name>
+kubectl delete pod <pod-name>
 ```
 
 Now run `kubectl get pods` again, what do you notice?
