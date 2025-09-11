@@ -18,7 +18,7 @@ kubectl get deployments
 ###  Update Your Manifest for Dual Deployments
 Open `deployment/manifests.yaml` and;
 
-  - Create an additional deployment called `kubechaos-custom`, which uses our newer version`local/kubechoas:v2`, with additional labels `spec.selector.matchLabels.version: custom` and `spec.template.metadata.labels: custom`.
+  - Create an additional deployment called `kubechaos-custom`, which uses our newer version`local/kubechaos:v2`, with additional labels `spec.selector.matchLabels.version: custom` and `spec.template.metadata.labels: custom`.
   - Update the original deployment to be called `kubechaos-original` with labels for `original`.
 
 Or simply replace `deployment/manifests.yaml` with this new specification:

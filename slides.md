@@ -279,7 +279,7 @@ Server running at http://localhost:3000
 ## Deletion Experiment
 Let's see what happens if we delete the pod from the cluster:
 ```
-kubectl delete <pod-name>
+kubectl delete pod <pod-name>
 ```
 
 Now run `kubectl get pods` again, what do you notice?
@@ -593,7 +593,7 @@ Now we will look at mounting our ConfigMap as a volume. This method is used when
 Usually a website's style is configured through a `.css` file, rather than environmental variables.
 
 Look at the ConfigMap either through the Minikube Dashboard or with:
-`kubectl describe configmap style-kubechaos`
+`kubectl describe configmap kubechaos-style`
 There is a definition of a css file :
 
 ```
