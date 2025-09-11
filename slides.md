@@ -593,7 +593,7 @@ Now we will look at mounting our ConfigMap as a volume. This method is used when
 Usually a website's style is configured through a `.css` file, rather than environmental variables.
 
 Look at the ConfigMap either through the Minikube Dashboard or with:
-`kubectl describe configmap style-kubechaos`
+`kubectl describe configmap kubechaos-style`
 There is a definition of a css file :
 
 ```
@@ -608,7 +608,7 @@ body { font-family: 'sans-serif';
 # Lesson 3: Updating with ConfigMaps
 Now let's edit these variables in the ConfigMap keeping the structure of the file intact:
 ```
-kubectl edit configmap style-kubechaos
+kubectl edit configmap kubechaos-style
 ```
 Refresh your browser? What happens now?
 > ⚠️  Note you will need to use specific variables for `font-family and `text-align`:
