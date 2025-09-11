@@ -20,7 +20,7 @@ Then, launch the dashboard with
 minikube dashboard
 ```
 This should open the web UI in a browser window. Alternatively, run `minikube
-dashobard --url` and copy the URL. 
+dashboard --url` and copy the URL. 
 
 > ⚠️  You will need to leave the terminal process open (or fork the command into
 > the background) to maintain access to the dashboard.
