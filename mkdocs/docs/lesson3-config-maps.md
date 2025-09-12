@@ -93,7 +93,7 @@ In the next section we will look at mounting our configMap to the container as a
 
 Usually a website's style is configured through a stylesheet provided as a `.css` file, rather than with environmental variables. In this section we are going to look at another way to use ConfigMaps, mounting them as volumes into the pod.
 
-If you look at the ConfigMap we have deployed on our cluster either through the Minikube Dashboard or by running `kubectl describe configmap style-kubechaos` you will see that there is a definition of a css file in the ConfigMap:
+If you look at the ConfigMap we have deployed on our cluster either through the Minikube Dashboard or by running `kubectl describe configmap kubechaos-style` you will see that there is a definition of a css file in the ConfigMap:
 
 ```
 style.css:
@@ -109,7 +109,7 @@ Now let's edit these variables in the ConfigMap keeping the structure of the fil
 >  - `text-align` can be `center`, `right`, `left`
 >  - `font-family` has to belong to the websafe fonts e.g. `serif`, `arial`, `garamond`
 ```
-kubectl edit configmap style-kubechoas
+kubectl edit configmap kubechaos-style
 ```
 
 Refresh your browser? What happens now? You will see the changes you made will be applied immediately on refresh without restarting the deployment.

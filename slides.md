@@ -45,7 +45,7 @@ Kubernetes is a powerful container orchestration platform that automates deploym
 ## Overview
  A kubernetes cluster is built up of nodes representing the machines and compute resources. The architecture is then divided into two main parts:
 
-- Control Plane nodes 
+- Control Plane nodes
 - Worker nodes
 
 ---
@@ -58,9 +58,9 @@ The **Control Plane** is the brain of the Kubernetes cluster. It manages the clu
 
 - Controller Manager - Runs controllers that handle routine tasks like node health checks, and endpoint management.
 
-- Scheduler - Assigns newly created pods to nodes based on resource availability and constraints. 
+- Scheduler - Assigns newly created pods to nodes based on resource availability and constraints.
 
-- etcd - A distributed key-value store that holds all cluster data. 
+- etcd - A distributed key-value store that holds all cluster data.
 
 ---
 # Kubernetes Architecture
@@ -173,7 +173,7 @@ Then, launch the dashboard with
 ```bash
 minikube dashboard
 ```
-or to get it to provide a url and run in the backgroud 
+or to get it to provide a url and run in the backgroud
 ```bash
 minikube dashboard --url &
 ```
@@ -279,7 +279,7 @@ Server running at http://localhost:3000
 ## Deletion Experiment
 Let's see what happens if we delete the pod from the cluster:
 ```
-kubectl delete <pod-name>
+kubectl delete pod <pod-name>
 ```
 
 Now run `kubectl get pods` again, what do you notice?
@@ -593,7 +593,7 @@ Now we will look at mounting our ConfigMap as a volume. This method is used when
 Usually a website's style is configured through a `.css` file, rather than environmental variables.
 
 Look at the ConfigMap either through the Minikube Dashboard or with:
-`kubectl describe configmap style-kubechaos`
+`kubectl describe configmap kubechaos-style`
 There is a definition of a css file :
 
 ```
@@ -608,7 +608,7 @@ body { font-family: 'sans-serif';
 # Lesson 3: Updating with ConfigMaps
 Now let's edit these variables in the ConfigMap keeping the structure of the file intact:
 ```
-kubectl edit configmap style-kubechoas
+kubectl edit configmap kubechaos-style
 ```
 Refresh your browser? What happens now?
 > ⚠️  Note you will need to use specific variables for `font-family and `text-align`:

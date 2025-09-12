@@ -19,7 +19,7 @@ h1 {color: teal}
 </style>
 
 ---
-# Lesson 1: Kubechoas
+# Lesson 1: kubechaos
 
 > :warning: Note that the URL `Server running at http://localhost:3000` refers to an internal port of the container
 > This **different** from the port you are accessing on your localhost.
